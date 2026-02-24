@@ -1,4 +1,4 @@
-name: Build
+name: Multi-Platform Build
 
 on:
   push:

@@ -10,7 +10,7 @@
 # --------------------------------------------------------------------------
 
 # Minimum CMake version required
-cmake_minimum_required(VERSION 4.1)
+cmake_minimum_required(VERSION  3.30)
 
 # Project name and version
 project(SoloEngine VERSION 1.0 LANGUAGES C CXX)
@@ -20,7 +20,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Build options
-option(BUILD_DOXYGEN "Build Doxygen documentation" ON)
+option(BUILD_DOXYGEN "Build Doxygen documentation" OFF)
 option(BUILD_TESTS "Build unit tests" ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
