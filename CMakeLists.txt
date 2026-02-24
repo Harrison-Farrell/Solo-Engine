@@ -1,0 +1,33 @@
+# --------------------------------------------------------------------------
+# Author:      Harrison Farrell
+# Project:     Solo-Engine Simulation Engine
+# Copyright:   (c) 2026 Harrison Farrell. All Rights Reserved.
+#
+# Licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+# This program is distributed WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
+# --------------------------------------------------------------------------
+
+# Minimum CMake version required
+cmake_minimum_required(VERSION 4.1)
+
+# Project name and version
+project(SoloEngine VERSION 1.0 LANGUAGES C CXX)
+
+# Set C++ standard globally
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Build options
+option(BUILD_DOXYGEN "Build Doxygen documentation" ON)
+option(BUILD_TESTS "Build unit tests" ON)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+add_subdirectory(src)
+add_subdirectory(app)
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()
