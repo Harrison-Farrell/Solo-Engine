@@ -9,3 +9,18 @@
 # See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
 # --------------------------------------------------------------------------
 
+add_executable(matrix_test
+    matrix_test.cpp
+)
+
+target_link_libraries(matrix_test PRIVATE
+    solo_engine::Math
+    gtest
+    gtest_main
+)
+
+target_include_directories(matrix_test PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
+)
+
+AddTests(matrix_test)
