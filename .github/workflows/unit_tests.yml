@@ -19,12 +19,11 @@ jobs:
         sudo apt-get install -y build-essential cmake ninja-build
     
     - name: Configure CMake
-      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -G Ninja -DBUILD_TESTS=ON
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G Ninja -DBUILD_TESTS=ON
     
     - name: Build
-      run: cmake --build build --config ${{ matrix.build-type }}
-    
+      run: cmake --build build --config Debug
     - name: Run Unit Tests
       run: |
         cd build
-        ctest --build-config ${{ matrix.build-type }} --output-on-failure --verbose
+        ctest --build-config Debug --output-on-failure --verbose
