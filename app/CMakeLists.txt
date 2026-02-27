@@ -14,6 +14,8 @@ add_executable(Simulator main.cpp)
 target_link_libraries(Simulator
     PRIVATE
         solo_engine::Engine
+        solo_engine::Math
+        solo_engine::Particle
 )
 
 target_include_directories(Simulator

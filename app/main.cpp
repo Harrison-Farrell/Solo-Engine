@@ -12,37 +12,43 @@
  */
 
 #include <iostream>
+
 #include "Engine/Engine.h"
+#include "Math/Vector.h"
 
 int main() {
     std::cout << "Starting Particle Engine Demo..." << std::endl;
 
     solo::engine::Engine engine;
 
+    solo::math::Vector position;
+    solo::math::Vector velocity;
     // Create and add multiple particles
     for (int i = 0; i < 5; ++i) {
-        solo::physics::Particle p(1.0 + i * 0.5); // Varying masses
-        p.setPosition(solo::math::Vector3(i * 1.5, i * 2.0, 0.0));
-        p.setVelocity(solo::math::Vector3(1.0, 0.0, 0.0)); // Moving along X axis
+        position.Set(2.0 * i, 5.0, i);
+        velocity.Set(1 + i, 5.0, 1 + i);
+        solo::physics::Particle p(1.0 + i * 0.5);  // Varying masses
+        p.setPosition(position);
+        p.setVelocity(velocity);  // Moving along X axis
         engine.addParticle(p);
     }
 
-    std::cout << "Added " << engine.getParticleCount() << " particles to the engine." << std::endl;
+    std::cout << "Added " << engine.getParticleCount()
+              << " particles to the engine." << std::endl;
 
     // Simulate for a few steps
     double dt = 0.1;
     for (int step = 1; step <= 3; ++step) {
         std::cout << "\n--- Step " << step << " ---" << std::endl;
         engine.updateParticles(dt, engine.getParticleCount());
-        
+
         // Print positions
         auto& particles = engine.getParticles();
         for (std::size_t i = 0; i < particles.size(); ++i) {
             auto pos = particles[i].getPosition();
-            std::cout << "Particle " << i << " Position: ("
-                      << pos.x << ", "
-                      << pos.y << ", "
-                      << pos.z << ")" << std::endl;
+            std::cout << "Particle " << i << " Position: (" << pos.GetX()
+                      << ", " << pos.GetY() << ", " << pos.GetZ() << ")"
+                      << std::endl;
         }
     }
 

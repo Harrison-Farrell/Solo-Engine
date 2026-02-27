@@ -16,35 +16,47 @@
 namespace solo {
 namespace physics {
 
-Particle::Particle(double mass) 
-    : mass_(mass), 
-      position_(), velocity_(), acceleration_(),
-      angle_(), angularVelocity_(), angularAcceleration_() {
+Particle::Particle(double mass)
+    : mass_(mass),
+      position_(),
+      velocity_(),
+      acceleration_(),
+      angle_(),
+      angularVelocity_(),
+      angularAcceleration_() {}
+
+double Particle::getMass() const { return mass_; }
+
+math::Vector Particle::getPosition() const { return position_; }
+math::Vector Particle::getVelocity() const { return velocity_; }
+math::Vector Particle::getAcceleration() const { return acceleration_; }
+
+math::Vector Particle::getAngle() const { return angle_; }
+math::Vector Particle::getAngularVelocity() const { return angularVelocity_; }
+math::Vector Particle::getAngularAcceleration() const {
+    return angularAcceleration_;
 }
 
-double Particle::getMass() const {
-    return mass_;
+void Particle::setPosition(const math::Vector& position) {
+    position_ = position;
+}
+void Particle::setVelocity(const math::Vector& velocity) {
+    velocity_ = velocity;
+}
+void Particle::setAcceleration(const math::Vector& acceleration) {
+    acceleration_ = acceleration;
 }
 
-math::Vector3 Particle::getPosition() const { return position_; }
-math::Vector3 Particle::getVelocity() const { return velocity_; }
-math::Vector3 Particle::getAcceleration() const { return acceleration_; }
+void Particle::setAngle(const math::Vector& angle) { angle_ = angle; }
 
-math::Vector3 Particle::getAngle() const { return angle_; }
-math::Vector3 Particle::getAngularVelocity() const { return angularVelocity_; }
-math::Vector3 Particle::getAngularAcceleration() const { return angularAcceleration_; }
-
-void Particle::setPosition(const math::Vector3& position) { position_ = position; }
-void Particle::setVelocity(const math::Vector3& velocity) { velocity_ = velocity; }
-void Particle::setAcceleration(const math::Vector3& acceleration) { acceleration_ = acceleration; }
-
-void Particle::setAngle(const math::Vector3& angle) { angle_ = angle; }
-void Particle::setAngularVelocity(const math::Vector3& angularVelocity) { angularVelocity_ = angularVelocity; }
-void Particle::setAngularAcceleration(const math::Vector3& angularAcceleration) { angularAcceleration_ = angularAcceleration; }
-
-void Particle::setMass(double mass) {
-    mass_ = mass;
+void Particle::setAngularVelocity(const math::Vector& angularVelocity) {
+    angularVelocity_ = angularVelocity;
 }
+void Particle::setAngularAcceleration(const math::Vector& angularAcceleration) {
+    angularAcceleration_ = angularAcceleration;
+}
+
+void Particle::setMass(double mass) { mass_ = mass; }
 
 void Particle::update(double dt) {
     // Integrate linear motion
@@ -56,5 +68,5 @@ void Particle::update(double dt) {
     angle_ += angularVelocity_ * dt;
 }
 
-} // namespace physics
-} // namespace solo
+}  // namespace physics
+}  // namespace solo

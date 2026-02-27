@@ -15,63 +15,151 @@
 
 #include <gtest/gtest.h>
 
+#include <iostream>
+
 // anonymous namespace to prevent name collisions
 namespace {
 
-TEST(Vector3_Test, Constructor) {
-    solo::math::Vector3 vector;
-    ASSERT_EQ(vector.x, 0.0);
-    ASSERT_EQ(vector.y, 0.0);
-    ASSERT_EQ(vector.z, 0.0);
+TEST(test_matrix, constructor) {
+    solo::math::Matrix3d matrix;
+    ASSERT_EQ(matrix.data[0][0], 1);
+    ASSERT_EQ(matrix.data[0][1], 0);
+    ASSERT_EQ(matrix.data[0][2], 0);
+    ASSERT_EQ(matrix.data[1][0], 0);
+    ASSERT_EQ(matrix.data[1][1], 1);
+    ASSERT_EQ(matrix.data[1][2], 0);
+    ASSERT_EQ(matrix.data[2][0], 0);
+    ASSERT_EQ(matrix.data[2][1], 0);
+    ASSERT_EQ(matrix.data[2][2], 1);
 }
 
-TEST(Vector3_Test, ConstructorWithValues) {
-    solo::math::Vector3 vector(1.0, 2.0, 3.0);
-    ASSERT_EQ(vector.x, 1.0);
-    ASSERT_EQ(vector.y, 2.0);
-    ASSERT_EQ(vector.z, 3.0);
+TEST(test_matrix, additional_operator) {
+    solo::math::Matrix3d m1;
+    solo::math::Matrix3d m2;
+
+    m1 = m1 + m2;
+    ASSERT_EQ(m1.data[0][0], 2);
+    ASSERT_EQ(m1.data[0][1], 0);
+    ASSERT_EQ(m1.data[0][2], 0);
+    ASSERT_EQ(m1.data[1][0], 0);
+    ASSERT_EQ(m1.data[1][1], 2);
+    ASSERT_EQ(m1.data[1][2], 0);
+    ASSERT_EQ(m1.data[2][0], 0);
+    ASSERT_EQ(m1.data[2][1], 0);
+    ASSERT_EQ(m1.data[2][2], 2);
+
+    m1 += m2;
+    ASSERT_EQ(m1.data[0][0], 3);
+    ASSERT_EQ(m1.data[0][1], 0);
+    ASSERT_EQ(m1.data[0][2], 0);
+    ASSERT_EQ(m1.data[1][0], 0);
+    ASSERT_EQ(m1.data[1][1], 3);
+    ASSERT_EQ(m1.data[1][2], 0);
+    ASSERT_EQ(m1.data[2][0], 0);
+    ASSERT_EQ(m1.data[2][1], 0);
+    ASSERT_EQ(m1.data[2][2], 3);
 }
 
-TEST(Vector3_Test, Add) {
-    solo::math::Vector3 vector(1.0, 2.0, 3.0);
-    solo::math::Vector3 other(4.0, 5.0, 6.0);
-    solo::math::Vector3 result = vector + other;
-    ASSERT_EQ(result.x, 5.0);
-    ASSERT_EQ(result.y, 7.0);
-    ASSERT_EQ(result.z, 9.0);
+TEST(test_matrix, subtraction_operator) {
+    solo::math::Matrix3d m1;
+    solo::math::Matrix3d m2;
+
+    m1 = m1 - m2;
+    ASSERT_EQ(m1.data[0][0], 0);
+    ASSERT_EQ(m1.data[0][1], 0);
+    ASSERT_EQ(m1.data[0][2], 0);
+    ASSERT_EQ(m1.data[1][0], 0);
+    ASSERT_EQ(m1.data[1][1], 0);
+    ASSERT_EQ(m1.data[1][2], 0);
+    ASSERT_EQ(m1.data[2][0], 0);
+    ASSERT_EQ(m1.data[2][1], 0);
+    ASSERT_EQ(m1.data[2][2], 0);
+
+    m1 -= m2;
+    ASSERT_EQ(m1.data[0][0], -1);
+    ASSERT_EQ(m1.data[0][1], 0);
+    ASSERT_EQ(m1.data[0][2], 0);
+    ASSERT_EQ(m1.data[1][0], 0);
+    ASSERT_EQ(m1.data[1][1], -1);
+    ASSERT_EQ(m1.data[1][2], 0);
+    ASSERT_EQ(m1.data[2][0], 0);
+    ASSERT_EQ(m1.data[2][1], 0);
+    ASSERT_EQ(m1.data[2][2], -1);
 }
 
-TEST(Vector3_Test, AddAssign) {
-    solo::math::Vector3 vector(1.0, 2.0, 3.0);
-    solo::math::Vector3 other(4.0, 5.0, 6.0);
-    vector += other;
-    ASSERT_EQ(vector.x, 5.0);
-    ASSERT_EQ(vector.y, 7.0);
-    ASSERT_EQ(vector.z, 9.0);
+TEST(test_matrix, multiplication_operator) {
+    solo::math::Matrix3d m1;
+    solo::math::Matrix3d m2;
+    for (uint16_t i = 0; i < 3; ++i) {
+        for (uint16_t j = 0; j < 3; ++j) {
+            m1.data[i][j] = 2;
+            m2.data[i][j] = 2;
+        }
+    }
+
+    m1 = m1 * m2;
+
+    ASSERT_EQ(m1.data[0][0], 12);
+    ASSERT_EQ(m1.data[0][1], 12);
+    ASSERT_EQ(m1.data[0][2], 12);
+    ASSERT_EQ(m1.data[1][0], 12);
+    ASSERT_EQ(m1.data[1][1], 12);
+    ASSERT_EQ(m1.data[1][2], 12);
+    ASSERT_EQ(m1.data[2][0], 12);
+    ASSERT_EQ(m1.data[2][1], 12);
+    ASSERT_EQ(m1.data[2][2], 12);
+
 }
 
-TEST(Vector3_Test, Multiply) {
-    solo::math::Vector3 vector(1.0, 2.0, 3.0);
-    solo::math::Vector3 result = vector * 2.0;
-    ASSERT_EQ(result.x, 2.0);
-    ASSERT_EQ(result.y, 4.0);
-    ASSERT_EQ(result.z, 6.0);
+TEST(test_matrix, scalar_multuplication)
+{
+    solo::math::Matrix3d m1;
+    for (uint16_t i = 0; i < 3; ++i) {
+        for (uint16_t j = 0; j < 3; ++j) {
+            m1.data[i][j] = 2;
+        }
+    }
+
+    m1 *= 2;
+    ASSERT_EQ(m1.data[0][0], 4);
+    ASSERT_EQ(m1.data[0][1], 4);
+    ASSERT_EQ(m1.data[0][2], 4);
+    ASSERT_EQ(m1.data[1][0], 4);
+    ASSERT_EQ(m1.data[1][1], 4);
+    ASSERT_EQ(m1.data[1][2], 4);
+    ASSERT_EQ(m1.data[2][0], 4);
+    ASSERT_EQ(m1.data[2][1], 4);
+    ASSERT_EQ(m1.data[2][2], 4);
+
+    m1 *= 2;
+    ASSERT_EQ(m1.data[0][0], 8);
+    ASSERT_EQ(m1.data[0][1], 8);
+    ASSERT_EQ(m1.data[0][2], 8);
+    ASSERT_EQ(m1.data[1][0], 8);
+    ASSERT_EQ(m1.data[1][1], 8);
+    ASSERT_EQ(m1.data[1][2], 8);
+    ASSERT_EQ(m1.data[2][0], 8);
+    ASSERT_EQ(m1.data[2][1], 8);
+    ASSERT_EQ(m1.data[2][2], 8);
 }
 
-TEST(Vector3_Test, Dot) {
-    solo::math::Vector3 vector(1.0, 2.0, 3.0);
-    solo::math::Vector3 other(4.0, 5.0, 6.0);
-    double result = vector.dot(other);
-    ASSERT_EQ(result, 32.0);
+TEST(test_matrix, in_place_transpose) {
+    solo::math::Matrix3d m1;
+
+    m1.data[0][0] = 3;
+    m1.data[0][1] = 3;
+    m1.data[0][2] = 3;
+
+    m1.inPlaceTranspose();
+    ASSERT_EQ(m1.data[0][0], 3);
+    ASSERT_EQ(m1.data[0][1], 0);
+    ASSERT_EQ(m1.data[0][2], 0);
+    ASSERT_EQ(m1.data[1][0], 3);
+    ASSERT_EQ(m1.data[1][1], 1);
+    ASSERT_EQ(m1.data[1][2], 0);
+    ASSERT_EQ(m1.data[2][0], 3);
+    ASSERT_EQ(m1.data[2][1], 0);
+    ASSERT_EQ(m1.data[2][2], 1);
 }
 
-TEST(Vector3_Test, Cross) {
-    solo::math::Vector3 vector(1.0, 2.0, 3.0);
-    solo::math::Vector3 other(4.0, 5.0, 6.0);
-    solo::math::Vector3 result = vector.cross(other);
-    ASSERT_EQ(result.x, -3.0);
-    ASSERT_EQ(result.y, 6.0);
-    ASSERT_EQ(result.z, -3.0);
-}
-
-} // namespace
+}  // namespace

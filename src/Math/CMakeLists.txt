@@ -14,7 +14,8 @@ add_library(solo_engine::Math ALIAS Math)
 
 target_sources(Math
     PRIVATE
-        Matrix.cpp
+        Kinematics.cpp
+        Vector.cpp
 )
 
 target_include_directories(Math

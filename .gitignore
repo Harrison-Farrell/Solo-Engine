@@ -1,5 +1,7 @@
 # build directories
 build/
+vs/
+.vs/
 doxygen/
 
 # Build results

@@ -14,174 +14,197 @@
 #ifndef SOLO_MATH_MATRIX_H
 #define SOLO_MATH_MATRIX_H
 
-#include <array>
+#include <stdint.h>
+
+#include <algorithm>
+#include <cstring>
+#include <iostream>
+#include <memory>
+
+#include "Vector.h"
 
 namespace solo {
 namespace math {
 
 /**
- * @brief Represents a 3D vector.
+ * @brief Templated class for performing Matrix mathematics
+ * @param Class Type
+ * @param Number of columns
+ * @param Number of rows
  */
-class Vector3 {
-public:
-    double x, y, z;
-
-    Vector3();
-    Vector3(double x, double y, double z);
+template <class Type, uint8_t cols, uint8_t rows>
+class Matrix {
+   public:
+    Type data[cols][rows];
 
     /**
-     * @brief Adds another vector to this vector.
-     * @param other The vector to add.
-     * @return The resulting vector.
+     * @brief Default on constructor
+     * @note Matrix initially set as an identity matrix
      */
-    Vector3 operator+(const Vector3& other) const;
+    Matrix() {
+        for (uint16_t i = 0; i < cols; ++i) {
+            for (uint16_t j = 0; j < rows; ++j) {
+                if (i == j)
+                    data[i][j] = 1;
+                else
+                    data[i][j] = 0;
+            }
+        }
+    };
 
     /**
-     * @brief Adds and assigns another vector to this vector.
-     * @param other The vector to add.
-     * @return Reference to this vector.
+     * @brief Addition binary operator overload.
+     * @param Matrix
      */
-    Vector3& operator+=(const Vector3& other);
+    Matrix operator+(const Matrix& Value) {
+        Matrix m = *this;
+        for (uint16_t i = 0; i < cols; ++i) {
+            for (uint16_t j = 0; j < rows; ++j) {
+                m.data[i][j] += Value.data[i][j];
+            }
+        }
+
+        return m;
+    };
 
     /**
-     * @brief Multiplies this vector by a scalar.
-     * @param scalar The scalar to multiply by.
-     * @return The resulting vector.
+     * @brief Addition assignment operator overload.
+     * @param Matrix
      */
-    Vector3 operator*(double scalar) const;
+    Matrix& operator+=(const Matrix& Value) {
+        for (uint16_t i = 0; i < cols; ++i) {
+            for (uint16_t j = 0; j < rows; ++j) {
+                data[i][j] += Value.data[i][j];
+            }
+        }
+
+        return *this;
+    };
 
     /**
-     * @brief Calculates the dot product of this vector and another.
-     * @param other The other vector.
-     * @return The dot product.
+     * @brief Subtraction binary operator overload.
+     * @param Matrix
      */
-    double dot(const Vector3& other) const;
+    Matrix operator-(const Matrix& Value) {
+        Matrix m = *this;
+        for (uint16_t i = 0; i < cols; ++i) {
+            for (uint16_t j = 0; j < rows; ++j) {
+                m.data[i][j] -= Value.data[i][j];
+            }
+        }
+
+        return m;
+    };
 
     /**
-     * @brief Calculates the cross product of this vector and another.
-     * @param other The other vector.
-     * @return The resulting cross product vector.
+     * @brief Subtraction assignment operator overload.
+     * @param Matrix
      */
-    Vector3 cross(const Vector3& other) const;
+    Matrix& operator-=(const Matrix& Value) {
+        for (uint16_t i = 0; i < cols; ++i) {
+            for (uint16_t j = 0; j < rows; ++j) {
+                data[i][j] -= Value.data[i][j];
+            }
+        }
+
+        return *this;
+    };
+
+    /**
+     * @brief Multiplication binary operator overload.
+     * @param Matrix
+     */
+    Matrix operator*(const Matrix& Value) {
+        Matrix result;
+        Type sum = 0;
+
+        for (uint16_t i = 0; i < rows; ++i) {
+            for (uint16_t j = 0; j < cols; ++j) {
+                for (uint16_t k = 0; k < cols; k++) {
+                    sum += this->data[i][k] * Value.data[k][j];
+                }
+
+                result.data[i][j] = sum;
+                sum = 0;
+            }
+        }
+        memcpy(this->data, result.data, sizeof(Type) * rows * cols);
+        return *this;
+    };
+
+    /**
+     * @brief Matrix scalar multiplication
+     * @param T scalar value
+     */
+    template <class T>
+    Matrix operator*(const T Value) {
+        Matrix m = *this;
+        for (uint16_t i = 0; i < cols; ++i) {
+            for (uint16_t j = 0; j < rows; ++j) {
+                m.data[i][j] *= Value;
+            }
+        }
+
+        return m;
+    };
+
+    /**
+     * @brief Matrix scalar assignment multiplication
+     * @param T scalar value
+     */
+    template <class T>
+    Matrix& operator*=(const T Value) {
+        for (uint16_t i = 0; i < cols; ++i) {
+            for (uint16_t j = 0; j < rows; ++j) {
+                data[i][j] *= Value;
+            }
+        }
+
+        return *this;
+    };
+
+    Vector operator*(const Vector& Value) {
+        Vector res;
+        for (uint16_t i = 0; i < rows; ++i) {
+            for (uint16_t j = 0; j < cols; ++j) {
+                res[i] += data[i][j] * Value[j];
+            }
+        }
+        return res;
+    };
+
+    void inPlaceTranspose() {
+        if (cols != rows) return;
+
+        for (uint16_t i = 0; i < rows; ++i) {
+            for (uint16_t j = 0; j < i; ++j) {
+                std::swap(this->data[i][j], this->data[j][i]);
+            }
+        }
+    }
+
+    /**
+     * @brief Ostream operator for printing Matrix
+     * @param os stream output
+     * @param m Matrix
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Matrix& m) {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                os << m.data[i][j] << " ";
+            }
+            os << "\n";  // Add newline after each row
+        }
+        return os;  // Return stream for chaining
+    }
 };
 
-// Forward declaration of Matrix3 and Matrix4 (if needed later)
-class Matrix3;
-class Matrix4;
-
 /**
- * @brief Multiplies a Vector3 by a Matrix3.
- * @param vec The vector.
- * @param mat The 3x3 matrix.
- * @return The resulting transformed vector.
+ * @brief 3x3 Matrix of type float
  */
-Vector3 operator*(const Vector3& vec, const Matrix3& mat);
+typedef Matrix<float, 3, 3> Matrix3d;
 
-/**
- * @brief Multiplies a Matrix3 by a Vector3.
- * @param mat The 3x3 matrix.
- * @param vec The vector.
- * @return The resulting transformed vector.
- */
-Vector3 operator*(const Matrix3& mat, const Vector3& vec);
+}  // namespace math
+}  // namespace solo
 
-/**
- * @brief Represents a 3x3 Matrix and provides static calculation methods.
- */
-class Matrix3 {
-public:
-    // 3x3 matrix data stored in row-major order
-    std::array<double, 9> data;
-
-    Matrix3();
-
-    /**
-     * @brief Returns an identity matrix.
-     * @return Identity Matrix3.
-     */
-    static Matrix3 identity();
-
-    /**
-     * @brief Multiplies two matrices resulting in a new matrix.
-     * @param a The left matrix.
-     * @param b The right matrix.
-     * @return The resulting matrix.
-     */
-    static Matrix3 multiply(const Matrix3& a, const Matrix3& b);
-
-    /**
-     * @brief Adds two matrices.
-     * @param a The first matrix.
-     * @param b The second matrix.
-     * @return The resulting matrix.
-     */
-    static Matrix3 add(const Matrix3& a, const Matrix3& b);
-
-    /**
-     * @brief Subtracts matrix b from matrix a.
-     * @param a The first matrix.
-     * @param b The second matrix.
-     * @return The resulting matrix.
-     */
-    static Matrix3 subtract(const Matrix3& a, const Matrix3& b);
-
-    /**
-     * @brief Transposes the given matrix.
-     * @param a The matrix to transpose.
-     * @return The resulting transposed matrix.
-     */
-    static Matrix3 transpose(const Matrix3& a);
-};
-
-/**
- * @brief Represents a 4x4 Matrix and provides static calculation methods.
- */
-class Matrix4 {
-public:
-    // 4x4 matrix data stored in row-major order
-    std::array<double, 16> data;
-
-    Matrix4();
-
-    /**
-     * @brief Returns an identity matrix.
-     * @return Identity Matrix4.
-     */
-    static Matrix4 identity();
-
-    /**
-     * @brief Multiplies two matrices resulting in a new matrix.
-     * @param a The left matrix.
-     * @param b The right matrix.
-     * @return The resulting matrix.
-     */
-    static Matrix4 multiply(const Matrix4& a, const Matrix4& b);
-
-    /**
-     * @brief Adds two matrices.
-     * @param a The first matrix.
-     * @param b The second matrix.
-     * @return The resulting matrix.
-     */
-    static Matrix4 add(const Matrix4& a, const Matrix4& b);
-
-    /**
-     * @brief Subtracts matrix b from matrix a.
-     * @param a The first matrix.
-     * @param b The second matrix.
-     * @return The resulting matrix.
-     */
-    static Matrix4 subtract(const Matrix4& a, const Matrix4& b);
-
-    /**
-     * @brief Transposes the given matrix.
-     * @param a The matrix to transpose.
-     * @return The resulting transposed matrix.
-     */
-    static Matrix4 transpose(const Matrix4& a);
-};
-
-} // namespace math
-} // namespace solo
-
-#endif // SOLO_MATH_MATRIX_H
+#endif  // SOLO_MATH_MATRIX_H

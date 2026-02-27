@@ -1,0 +1,17 @@
+{
+    "editor.formatOnSave": true,
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+    "C_Cpp.autoAddFileAssociations": false,
+    "files.associations": {
+        ".clang-format": "yaml",
+        ".clang-tidy": "yaml",
+        ".cmake-format": "yaml",
+        "Doxyfile.in": "doxyfile",
+        "*.cmake.in": "cmake",
+        "*.hpp.in": "cpp"
+    },
+    "[markdown]": {
+        "editor.wordWrap": "off"
+    },
+    "cSpell.enabled": true
+}

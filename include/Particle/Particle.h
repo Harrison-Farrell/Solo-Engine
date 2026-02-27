@@ -15,6 +15,7 @@
 #define SOLO_PHYSICS_PARTICLE_H
 
 #include "Math/Matrix.h"
+#include "Math/Vector.h"
 
 namespace solo {
 namespace physics {
@@ -23,7 +24,7 @@ namespace physics {
  * @brief Represents a physical particle in 3D space.
  */
 class Particle {
-public:
+   public:
     /**
      * @brief Constructs a new Particle object.
      * @param mass The mass of the particle. Default is 1.0.
@@ -32,45 +33,43 @@ public:
 
     // Getters
     double getMass() const;
-    math::Vector3 getPosition() const;
-    math::Vector3 getVelocity() const;
-    math::Vector3 getAcceleration() const;
-
-    math::Vector3 getAngle() const;
-    math::Vector3 getAngularVelocity() const;
-    math::Vector3 getAngularAcceleration() const;
-
+    math::Vector getPosition() const;
+    math::Vector getVelocity() const;
+    math::Vector getAcceleration() const;
+    math::Vector getAngle() const;
+    math::Vector getAngularVelocity() const;
+    math::Vector getAngularAcceleration() const;
     // Setters
     void setMass(double mass);
-    void setPosition(const math::Vector3& position);
-    void setVelocity(const math::Vector3& velocity);
-    void setAcceleration(const math::Vector3& acceleration);
-
-    void setAngle(const math::Vector3& angle);
-    void setAngularVelocity(const math::Vector3& angularVelocity);
-    void setAngularAcceleration(const math::Vector3& angularAcceleration);
+    void setPosition(const math::Vector& position);
+    void setVelocity(const math::Vector& velocity);
+    void setAcceleration(const math::Vector& acceleration);
+    void setAngle(const math::Vector& angle);
+    void setAngularVelocity(const math::Vector& angularVelocity);
+    void setAngularAcceleration(const math::Vector& angularAcceleration);
 
     /**
-     * @brief Update the particle's position based on its velocity and a time step.
+     * @brief Update the particle's position based on its velocity and a time
+     * step.
      * @param dt Delta time for the physical update.
      */
     void update(double dt);
 
-private:
+   private:
     double mass_;
-    
+
     // Position
-    math::Vector3 position_;
-    math::Vector3 velocity_;
-    math::Vector3 acceleration_;
+    math::Vector position_;
+    math::Vector velocity_;
+    math::Vector acceleration_;
 
     // Angle (Rotation)
-    math::Vector3 angle_;
-    math::Vector3 angularVelocity_;
-    math::Vector3 angularAcceleration_;
+    math::Vector angle_;
+    math::Vector angularVelocity_;
+    math::Vector angularAcceleration_;
 };
 
-} // namespace physics
-} // namespace solo
+}  // namespace physics
+}  // namespace solo
 
-#endif // SOLO_PHYSICS_PARTICLE_H
+#endif  // SOLO_PHYSICS_PARTICLE_H
