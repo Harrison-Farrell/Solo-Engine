@@ -9,8 +9,6 @@
 # See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
 # --------------------------------------------------------------------------
 
-enable_testing()
-
 include(FetchContent)
 FetchContent_Declare(
 	googletest
@@ -40,12 +38,12 @@ macro(AddTests target)
     gtest_main
 	)
 
-	gtest_discover_tests(${target})
-
 	set_target_properties(${target} PROPERTIES
 		ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/test"
 		LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/test"
 	)
+
+	gtest_discover_tests(${target})
 
 endmacro()
