@@ -30,10 +30,22 @@ FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
 
 macro(AddTests target)
+	add_executable(${target} ${target}.cpp)
+
+	target_include_directories(${target} PRIVATE ${CMAKE_SOURCE_DIR}/include)
+	
+	target_link_libraries(${target} PRIVATE
+    solo_engine::Math
+    gtest
+    gtest_main
+	)
+
 	gtest_discover_tests(${target})
+
 	set_target_properties(${target} PROPERTIES
 		ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/test"
 		LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/test"
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/test"
 	)
+
 endmacro()

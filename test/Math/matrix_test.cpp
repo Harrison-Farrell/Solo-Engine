@@ -15,8 +15,6 @@
 
 #include <gtest/gtest.h>
 
-#include <iostream>
-
 // anonymous namespace to prevent name collisions
 namespace {
 
@@ -108,11 +106,9 @@ TEST(test_matrix, multiplication_operator) {
     ASSERT_EQ(m1.data[2][0], 12);
     ASSERT_EQ(m1.data[2][1], 12);
     ASSERT_EQ(m1.data[2][2], 12);
-
 }
 
-TEST(test_matrix, scalar_multuplication)
-{
+TEST(test_matrix, scalar_multiplication) {
     solo::math::Matrix3d m1;
     for (uint16_t i = 0; i < 3; ++i) {
         for (uint16_t j = 0; j < 3; ++j) {

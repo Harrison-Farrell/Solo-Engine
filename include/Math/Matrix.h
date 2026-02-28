@@ -16,10 +16,10 @@
 
 #include <stdint.h>
 
-#include <algorithm>
 #include <cstring>
 #include <iostream>
 #include <memory>
+#include <utility>
 
 #include "Vector.h"
 
@@ -115,21 +115,40 @@ class Matrix {
      * @param Matrix
      */
     Matrix operator*(const Matrix& Value) {
-        Matrix result;
-        Type sum = 0;
+        Matrix m;
 
         for (uint16_t i = 0; i < rows; ++i) {
             for (uint16_t j = 0; j < cols; ++j) {
-                for (uint16_t k = 0; k < cols; k++) {
+                Type sum = 0;
+                for (uint16_t k = 0; k < cols; ++k) {
                     sum += this->data[i][k] * Value.data[k][j];
                 }
 
-                result.data[i][j] = sum;
-                sum = 0;
+                m.data[i][j] = sum;
             }
         }
-        memcpy(this->data, result.data, sizeof(Type) * rows * cols);
-        return *this;
+        return m;
+    };
+
+    /**
+     * @brief Multiplication binary operator overload.
+     * @param Matrix
+     */
+    Matrix operator*=(const Matrix& Value) {
+        Matrix m;
+
+        for (uint16_t i = 0; i < rows; ++i) {
+            for (uint16_t j = 0; j < cols; ++j) {
+                Type sum = 0;
+                for (uint16_t k = 0; k < cols; ++k) {
+                    sum += this->data[i][k] * Value.data[k][j];
+                }
+
+                m.data[i][j] = sum;
+            }
+        }
+        std::memcpy(this->data, m.data, sizeof(Type) * rows * cols);
+        return m;
     };
 
     /**
