@@ -1,22 +1,22 @@
-/*
- * --------------------------------------------------------------------------
- * Author:      Harrison Farrell
- * Project:     Solo-Engine Simulation Engine
- * Copyright:   (c) 2026 Harrison Farrell. All Rights Reserved.
- *
- * Licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
- * This program is distributed WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
- * --------------------------------------------------------------------------
- */
+// -----------------------------------------------------------------------------
+// Author:      Harrison Farrell
+// Project:     Solo-Engine Simulation Engine
+// Copyright:   (c) 2026 Harrison Farrell. All Rights Reserved.
+//
+// Licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+// This program is distributed WITHOUT ANY WARRANTY; without even the
+// implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
+// -----------------------------------------------------------------------------
 
 #ifndef SOLO_ENGINE_ENGINE_H
 #define SOLO_ENGINE_ENGINE_H
 
-#include <vector>
 #include <cstddef>
+#include <vector>
+
 #include "Particle/Particle.h"
+
 
 namespace solo {
 namespace engine {
@@ -25,7 +25,7 @@ namespace engine {
  * @brief Core engine class managing physical entities.
  */
 class Engine {
-public:
+   public:
     Engine() = default;
 
     /**
@@ -53,11 +53,11 @@ public:
      */
     std::vector<physics::Particle>& getParticles();
 
-private:
+   private:
     std::vector<physics::Particle> particles_;
 };
 
-} // namespace engine
-} // namespace solo
+}  // namespace engine
+}  // namespace solo
 
-#endif // SOLO_ENGINE_ENGINE_H
+#endif  // SOLO_ENGINE_ENGINE_H
