@@ -42,11 +42,12 @@ void Particle::SetAcceleration(const math::Vector& acceleration) {
 
 void Particle::SetAngle(const math::Vector& angle) { mAngle = angle; }
 
-void Particle::SetAngularVelocity(const math::Vector& angularVelocity) {
-    mAngularVelocity = angularVelocity;
+void Particle::SetAngularVelocity(const math::Vector& angular_velocity) {
+    mAngularVelocity = angular_velocity;
 }
-void Particle::SetAngularAcceleration(const math::Vector& angularAcceleration) {
-    mAngularAcceleration = angularAcceleration;
+void Particle::SetAngularAcceleration(
+    const math::Vector& angular_acceleration) {
+    mAngularAcceleration = angular_acceleration;
 }
 
 void Particle::SetMass(double mass) { mMass = mass; }

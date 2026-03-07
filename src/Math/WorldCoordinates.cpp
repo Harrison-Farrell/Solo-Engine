@@ -12,166 +12,179 @@
 #include "Math/WorldCoordinates.h"
 
 #include <cmath>
+#include <cstdint>
 #include <stdexcept>
-#include <string>
+#include <string>  // NOLINT(misc-include-cleaner) std::to_string()
 
 #include "Math/Vector.h"
 
-solo::math::WorldCoordinates::WorldCoordinates(double X, double Y, double Z)
-    : m_f64X(X), m_f64Y(Y), m_f64Z(Z) {}
+solo::math::WorldCoordinates::WorldCoordinates(double x_value, double y_value,
+                                               double z_value)
+    : mXValue(x_value), mYValue(y_value), mZValue(z_value) {}
 
-void solo::math::WorldCoordinates::SetX(double X) { m_f64X = X; }
+void solo::math::WorldCoordinates::SetX(double x_value) { mXValue = x_value; }
 
-double solo::math::WorldCoordinates::GetX() const { return m_f64X; }
+double solo::math::WorldCoordinates::GetX() const { return mXValue; }
 
-void solo::math::WorldCoordinates::SetY(double Y) { m_f64Y = Y; }
+void solo::math::WorldCoordinates::SetY(double y_value) { mYValue = y_value; }
 
-double solo::math::WorldCoordinates::GetY() const { return m_f64Y; }
+double solo::math::WorldCoordinates::GetY() const { return mYValue; }
 
-void solo::math::WorldCoordinates::SetZ(double Z) { m_f64Z = Z; }
+void solo::math::WorldCoordinates::SetZ(double z_value) { mZValue = z_value; }
 
-double solo::math::WorldCoordinates::GetZ() const { return m_f64Z; }
+double solo::math::WorldCoordinates::GetZ() const { return mZValue; }
 
-void solo::math::WorldCoordinates::Set(double X, double Y, double Z) {
-    m_f64X = X;
-    m_f64Y = Y;
-    m_f64Z = Z;
+void solo::math::WorldCoordinates::Set(double x_value, double y_value,
+                                       double z_value) {
+    mXValue = x_value;
+    mYValue = y_value;
+    mZValue = z_value;
 }
 
 double solo::math::WorldCoordinates::GetDistance(
-    const solo::math::WorldCoordinates& Other) {
-    solo::math::WorldCoordinates w = *this - Other;
-    double f =
-        (w.m_f64X * w.m_f64X) + (w.m_f64Y * w.m_f64Y) + (w.m_f64Z * w.m_f64Z);
-    return std::sqrt(f);
+    const solo::math::WorldCoordinates& location) {
+    const solo::math::WorldCoordinates world = *this - location;
+    const double x_y_z_squared = (world.mXValue * world.mXValue) +
+                                 (world.mYValue * world.mYValue) +
+                                 (world.mZValue * world.mZValue);
+    return std::sqrt(x_y_z_squared);
 }
 
 solo::math::WorldCoordinates solo::math::WorldCoordinates::Lerp(
-    const solo::math::WorldCoordinates& From,
-    const solo::math::WorldCoordinates& To, float T) {
-    return From + ((To - From) * T);
+    const solo::math::WorldCoordinates& source,
+    const solo::math::WorldCoordinates& destination, float point) {
+    return source + ((destination - source) * point);
 }
 
-void solo::math::WorldCoordinates::Lerp(const solo::math::WorldCoordinates& To,
-                                        float T) {
-    *this = Lerp(*this, To, T);
+void solo::math::WorldCoordinates::Lerp(
+    const solo::math::WorldCoordinates& destination, float point) {
+    *this = Lerp(*this, destination, point);
 }
 
 bool solo::math::WorldCoordinates::operator==(
-    const solo::math::WorldCoordinates& Value) const {
-    if (m_f64X != Value.m_f64X) return false;
-    if (m_f64Y != Value.m_f64Y) return false;
-    if (m_f64Z != Value.m_f64Z) return false;
+    const solo::math::WorldCoordinates& value) const {
+    if (mXValue != value.mXValue) {
+        return false;
+    }
+    if (mYValue != value.mYValue) {
+        return false;
+    }
+    if (mZValue != value.mZValue) {
+        return false;
+    }
     return true;
 }
 
 bool solo::math::WorldCoordinates::operator!=(
-    const solo::math::WorldCoordinates& Value) const {
-    return !(*this == Value);
+    const solo::math::WorldCoordinates& value) const {
+    return !(*this == value);
 }
 
 solo::math::WorldCoordinates solo::math::WorldCoordinates::operator*(
-    const solo::math::WorldCoordinates& Value) const {
+    const solo::math::WorldCoordinates& value) const {
     solo::math::WorldCoordinates tmp = *this;
-    tmp.m_f64X *= Value.m_f64X;
-    tmp.m_f64Y *= Value.m_f64Y;
-    tmp.m_f64Z *= Value.m_f64Z;
+    tmp.mXValue *= value.mXValue;
+    tmp.mYValue *= value.mYValue;
+    tmp.mZValue *= value.mZValue;
     return tmp;
 }
 
 solo::math::WorldCoordinates solo::math::WorldCoordinates::operator*(
-    double Value) const {
+    double value) const {
     solo::math::WorldCoordinates tmp = *this;
-    tmp.m_f64X *= Value;
-    tmp.m_f64Y *= Value;
-    tmp.m_f64Z *= Value;
+    tmp.mXValue *= value;
+    tmp.mYValue *= value;
+    tmp.mZValue *= value;
     return tmp;
 }
 
 solo::math::WorldCoordinates solo::math::WorldCoordinates::operator*(
-    float Value) const {
+    float value) const {
     solo::math::WorldCoordinates tmp = *this;
-    tmp.m_f64X *= Value;
-    tmp.m_f64Y *= Value;
-    tmp.m_f64Z *= Value;
+    tmp.mXValue *= value;
+    tmp.mYValue *= value;
+    tmp.mZValue *= value;
     return tmp;
 }
 
 solo::math::WorldCoordinates solo::math::WorldCoordinates::operator+(
-    const solo::math::WorldCoordinates& Value) const {
+    const solo::math::WorldCoordinates& value) const {
     solo::math::WorldCoordinates tmp = *this;
-    tmp.m_f64X += Value.m_f64X;
-    tmp.m_f64Y += Value.m_f64Y;
-    tmp.m_f64Z += Value.m_f64Z;
+    tmp.mXValue += value.mXValue;
+    tmp.mYValue += value.mYValue;
+    tmp.mZValue += value.mZValue;
     return tmp;
 }
 
 solo::math::WorldCoordinates solo::math::WorldCoordinates::operator+(
-    const Vector& Value) const {
+    const Vector& value) const {
     solo::math::WorldCoordinates tmp = *this;
-    tmp.m_f64X += Value.GetX();
-    tmp.m_f64Y += Value.GetY();
-    tmp.m_f64Z += Value.GetZ();
+    tmp.mXValue += value.GetX();
+    tmp.mYValue += value.GetY();
+    tmp.mZValue += value.GetZ();
     return tmp;
 }
 
 solo::math::WorldCoordinates& solo::math::WorldCoordinates::operator+=(
-    const Vector& Value) {
-    m_f64X += Value.GetX();
-    m_f64Y += Value.GetY();
-    m_f64Z += Value.GetZ();
+    const Vector& value) {
+    mXValue += value.GetX();
+    mYValue += value.GetY();
+    mZValue += value.GetZ();
     return *this;
 }
 
-const solo::math::WorldCoordinates& solo::math::WorldCoordinates::operator=(
-    const Vector& Value) {
-    m_f64X = Value.GetX();
-    m_f64Y = Value.GetY();
-    m_f64Z = Value.GetZ();
+solo::math::WorldCoordinates& solo::math::WorldCoordinates::operator=(
+    const Vector& value) {
+    mXValue = value.GetX();
+    mYValue = value.GetY();
+    mZValue = value.GetZ();
     return *this;
 }
 
 solo::math::WorldCoordinates solo::math::WorldCoordinates::operator-(
-    const solo::math::WorldCoordinates& Value) const {
+    const solo::math::WorldCoordinates& value) const {
     solo::math::WorldCoordinates tmp = *this;
-    tmp.m_f64X -= Value.m_f64X;
-    tmp.m_f64Y -= Value.m_f64Y;
-    tmp.m_f64Z -= Value.m_f64Z;
+    tmp.mXValue -= value.mXValue;
+    tmp.mYValue -= value.mYValue;
+    tmp.mZValue -= value.mZValue;
     return tmp;
 }
 
 solo::math::WorldCoordinates& solo::math::WorldCoordinates::operator-=(
-    const solo::math::WorldCoordinates& Value) {
-    m_f64X -= Value.m_f64X;
-    m_f64Y -= Value.m_f64Y;
-    m_f64Z -= Value.m_f64Z;
+    const solo::math::WorldCoordinates& value) {
+    mXValue -= value.mXValue;
+    mYValue -= value.mYValue;
+    mZValue -= value.mZValue;
     return *this;
 }
 
-double& solo::math::WorldCoordinates::operator[](uint16_t i) {
-    switch (i) {
+double& solo::math::WorldCoordinates::operator[](uint16_t position) {
+    switch (position) {
         case 0:
-            return m_f64X;
+            return mXValue;
         case 1:
-            return m_f64Y;
+            return mYValue;
         case 2:
-            return m_f64Z;
+            return mZValue;
         default:
-            throw std::out_of_range("Vector index: " + std::to_string(i) +
-                                    " is out of range");
+            throw std::out_of_range(
+                "Vector index: " + std::to_string(position) +
+                " is out of range");
     }
 }
 
-const double& solo::math::WorldCoordinates::operator[](uint16_t i) const {
-    switch (i) {
+const double& solo::math::WorldCoordinates::operator[](
+    uint16_t position) const {
+    switch (position) {
         case 0:
-            return m_f64X;
+            return mXValue;
         case 1:
-            return m_f64Y;
+            return mYValue;
         case 2:
-            return m_f64Z;
+            return mZValue;
         default:
-            throw std::out_of_range("Vector index: " + std::to_string(i) +
-                                    " is out of range");
+            throw std::out_of_range(
+                "Vector index: " + std::to_string(position) +
+                " is out of range");
     }
 }

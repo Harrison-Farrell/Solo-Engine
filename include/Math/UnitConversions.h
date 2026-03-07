@@ -18,13 +18,20 @@
 namespace solo {
 namespace math {
 
+namespace constant {
+static constexpr double k2PI = 180.0;
+static constexpr double kFeet2Meters = 3.2808;
+static constexpr double kSixty = 60.0;
+static constexpr double kThreeThousandSixHundred = 3600;
+}  // namespace constant
+
 /// @brief Radians to Degrees conversion
 /// @tparam Type
 /// @param Rad
 /// @return
 template <class Type>
-inline Type RadToDeg(Type Rad) {
-    return static_cast<Type>(Rad * (180.0 / std::numbers::pi));
+inline Type RadToDeg(Type rad) {
+    return static_cast<Type>(rad * (constant::k2PI / std::numbers::pi));
 }
 
 /// @brief Degrees to Radians conversion
@@ -32,38 +39,41 @@ inline Type RadToDeg(Type Rad) {
 /// @param Deg
 /// @return
 template <class Type>
-inline Type DegToRad(Type Deg) {
-    return static_cast<Type>(Deg * (std::numbers::pi / 180.0));
+inline Type DegToRad(Type deg) {
+    return static_cast<Type>(deg * (std::numbers::pi / constant::k2PI));
 }
 
 template <class Type>
-inline Type FeetToMeters(Type Feet) {
-    return static_cast<Type>(Feet / 3.2808);
+inline Type FeetToMeters(Type feet) {
+    return static_cast<Type>(feet / constant::kFeet2Meters);
 }
 
 template <class Type>
-inline Type MetersToFeet(Type Meters) {
-    return static_cast<Type>(Meters * 3.2808);
+inline Type MetersToFeet(Type meters) {
+    return static_cast<Type>(meters * constant::kFeet2Meters);
 }
 
 template <class Type>
-inline void DecimalToDMS(Type Decimal, Type& DegOUT, Type& MinOUT,
-                         Type& SecOUT) {
-    Decimal = std::abs(Decimal);  // Make sure the value is not negative
-    DegOUT = static_cast<Type>(static_cast<uint32_t>(Decimal));
-    Decimal -= DegOUT;  // Degrees
+inline void DecimalToDMS(Type decimal, Type& degrees_out, Type& minutes_out,
+                         Type& seconds_out) {
+    decimal = std::abs(decimal);  // Make sure the value is not negative
+    degrees_out = static_cast<Type>(static_cast<uint32_t>(decimal));
+    decimal -= degrees_out;  // Degrees
 
-    MinOUT = static_cast<Type>(Decimal * 60.0);
+    minutes_out = static_cast<Type>(decimal * constant::kSixty);
 
-    Decimal = MinOUT - static_cast<Type>(static_cast<uint32_t>(MinOUT));
+    decimal =
+        minutes_out - static_cast<Type>(static_cast<uint32_t>(minutes_out));
 
-    MinOUT = static_cast<Type>(static_cast<uint32_t>(MinOUT));  // Minutes
-    SecOUT = static_cast<Type>(Decimal * 60.0);                 // Seconds
+    minutes_out =
+        static_cast<Type>(static_cast<uint32_t>(minutes_out));    // Minutes
+    seconds_out = static_cast<Type>(decimal * constant::kSixty);  // Seconds
 }
 
 template <class Type>
-inline Type DMSToDecimal(Type Deg, Type Min, Type Sec) {
-    return static_cast<Type>(Deg + (Min / 60.0) + (Sec / 3600.0));
+inline Type DMSToDecimal(Type degrees, Type minutes, Type seconds) {
+    return static_cast<Type>(degrees + (minutes / constant::kSixty) +
+                             (seconds / constant::kThreeThousandSixHundred));
 }
 }  // namespace math
 }  // namespace solo

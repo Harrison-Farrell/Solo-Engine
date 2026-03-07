@@ -1,4 +1,9 @@
 ---
+SystemHeaders: false
+HeaderFilterRegex: 'include|src'
+ExcludeHeaderFilterRegex: 'llvm|clang|googletest|gmock|gtest'
+FormatStyle: "file"
+WarningsAsErrors: ''
 Checks:
     '
     -*,
@@ -27,10 +32,6 @@ ImplementationFileExtensions:
   - cc
   - cpp
   - cxx
-HeaderFilterRegex: '.*'
-ExcludeHeaderFilterRegex: 'googletest|gmock|gtest'
-FormatStyle: "file"
-WarningsAsErrors: ''
 CheckOptions:
   readability-identifier-naming.PrivateMemberPrefix: 'm'
   readability-identifier-naming.PrivateMemberCase: 'CamelBack'
@@ -39,5 +40,7 @@ CheckOptions:
   readability-identifier-naming.FunctionCase: 'CamelCase' 
   readability-identifier-naming.LocalVariableCase: 'lower_case'
   readability-identifier-naming.ParameterCase: 'lower_case'
+  readability-identifier-naming.StaticConstexprVariablePrefix: 'k'
+  readability-identifier-naming.StaticConstantCase: 'CamelCase'
 ...
 

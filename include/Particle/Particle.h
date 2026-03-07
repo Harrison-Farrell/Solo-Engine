@@ -43,8 +43,8 @@ class Particle {
     void SetVelocity(const math::Vector& velocity);
     void SetAcceleration(const math::Vector& acceleration);
     void SetAngle(const math::Vector& angle);
-    void SetAngularVelocity(const math::Vector& angularVelocity);
-    void SetAngularAcceleration(const math::Vector& angularAcceleration);
+    void SetAngularVelocity(const math::Vector& angular_velocity);
+    void SetAngularAcceleration(const math::Vector& angular_acceleration);
 
     /**
      * @brief Update the particle's position based on its v`elocity and a time

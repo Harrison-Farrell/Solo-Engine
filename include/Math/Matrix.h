@@ -14,6 +14,7 @@
 
 #include <stdint.h>
 
+#include <array>
 #include <cstring>
 #include <iostream>
 #include <memory>
@@ -33,7 +34,7 @@ namespace math {
 template <class Type, uint8_t cols, uint8_t rows>
 class Matrix {
    public:
-    Type data[cols][rows];
+    std::array<std::array<Type, cols>, rows> mData;
 
     /**
      * @brief Default on constructor
@@ -43,9 +44,9 @@ class Matrix {
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
                 if (i == j) {
-                    data[i][j] = 1;
+                    mData[i][j] = 1;
                 } else {
-                    data[i][j] = 0;
+                    mData[i][j] = 0;
                 }
             }
         }
@@ -55,11 +56,11 @@ class Matrix {
      * @brief Addition binary operator overload.
      * @param Matrix
      */
-    Matrix operator+(const Matrix& Value) {
+    Matrix operator+(const Matrix& value) {
         Matrix matrix = *this;
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                matrix.data[i][j] += Value.data[i][j];
+                matrix.mData[i][j] += value.mData[i][j];
             }
         }
 
@@ -70,10 +71,10 @@ class Matrix {
      * @brief Addition assignment operator overload.
      * @param Matrix
      */
-    Matrix& operator+=(const Matrix& Value) {
+    Matrix& operator+=(const Matrix& value) {
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                data[i][j] += Value.data[i][j];
+                mData[i][j] += value.mData[i][j];
             }
         }
 
@@ -84,11 +85,11 @@ class Matrix {
      * @brief Subtraction binary operator overload.
      * @param Matrix
      */
-    Matrix operator-(const Matrix& Value) {
+    Matrix operator-(const Matrix& value) {
         Matrix matrix = *this;
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                matrix.data[i][j] -= Value.data[i][j];
+                matrix.mData[i][j] -= value.mData[i][j];
             }
         }
 
@@ -99,10 +100,10 @@ class Matrix {
      * @brief Subtraction assignment operator overload.
      * @param Matrix
      */
-    Matrix& operator-=(const Matrix& Value) {
+    Matrix& operator-=(const Matrix& value) {
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                data[i][j] -= Value.data[i][j];
+                mData[i][j] -= value.mData[i][j];
             }
         }
 
@@ -113,17 +114,17 @@ class Matrix {
      * @brief Multiplication binary operator overload.
      * @param Matrix
      */
-    Matrix operator*(const Matrix& Value) {
+    Matrix operator*(const Matrix& value) {
         Matrix matrix;
 
         for (uint16_t i = 0; i < rows; ++i) {
             for (uint16_t j = 0; j < cols; ++j) {
                 Type sum = 0;
                 for (uint16_t k = 0; k < cols; ++k) {
-                    sum += this->data[i][k] * Value.data[k][j];
+                    sum += this->mData[i][k] * value.mData[k][j];
                 }
 
-                matrix.data[i][j] = sum;
+                matrix.mData[i][j] = sum;
             }
         }
         return matrix;
@@ -133,20 +134,20 @@ class Matrix {
      * @brief Multiplication binary operator overload.
      * @param Matrix
      */
-    Matrix operator*=(const Matrix& Value) {
+    Matrix operator*=(const Matrix& value) {
         Matrix matrix;
 
         for (uint16_t i = 0; i < rows; ++i) {
             for (uint16_t j = 0; j < cols; ++j) {
                 Type sum = 0;
                 for (uint16_t k = 0; k < cols; ++k) {
-                    sum += this->data[i][k] * Value.data[k][j];
+                    sum += this->mData[i][k] * value.mData[k][j];
                 }
 
-                matrix.data[i][j] = sum;
+                matrix.mData[i][j] = sum;
             }
         }
-        this->data = std::move(matrix.data);
+        this->mData = std::move(matrix.mData);
         return matrix;
     };
 
@@ -155,11 +156,11 @@ class Matrix {
      * @param T scalar value
      */
     template <class T>
-    Matrix operator*(const T Value) {
+    Matrix operator*(const T value) {
         Matrix matrix = *this;
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                matrix.data[i][j] *= Value;
+                matrix.mData[i][j] *= value;
             }
         }
 
@@ -171,21 +172,21 @@ class Matrix {
      * @param T scalar value
      */
     template <class T>
-    Matrix& operator*=(const T Value) {
+    Matrix& operator*=(const T value) {
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                data[i][j] *= Value;
+                mData[i][j] *= value;
             }
         }
 
         return *this;
     };
 
-    Vector operator*(const Vector& Value) {
+    Vector operator*(const Vector& value) {
         Vector res;
         for (uint16_t i = 0; i < rows; ++i) {
             for (uint16_t j = 0; j < cols; ++j) {
-                res[i] += data[i][j] * Value[j];
+                res[i] += mData[i][j] * value[j];
             }
         }
         return res;
@@ -196,7 +197,7 @@ class Matrix {
 
         for (uint16_t i = 0; i < rows; ++i) {
             for (uint16_t j = 0; j < i; ++j) {
-                std::swap(this->data[i][j], this->data[j][i]);
+                std::swap(this->mData[i][j], this->mData[j][i]);
             }
         }
     }
@@ -210,7 +211,7 @@ class Matrix {
                                     const Matrix& matrix) {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                stream << matrix.data[i][j] << " ";
+                stream << matrix.mData[i][j] << " ";
             }
             stream << "\n";  // Add newline after each row
         }

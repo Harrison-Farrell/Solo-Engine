@@ -18,8 +18,5 @@
         "editor.wordWrap": "off"
     },
     "cSpell.enabled": false,
-    "C_Cpp.loggingLevel": "Debug",
-    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
-        "clang-diagnostic-error"
-    ]
+    "C_Cpp.loggingLevel": "Debug"
 }

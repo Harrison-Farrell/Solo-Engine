@@ -9,36 +9,46 @@
 // See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
 // -----------------------------------------------------------------------------
 
+#include <cstddef>
 #include <iostream>
 
 #include "Engine/Engine.h"
 #include "Math/Vector.h"
+#include "Particle/Particle.h"
 
 int main() {
     std::cout << "Starting Particle Engine Demo..." << std::endl;
 
-    solo::engine::Engine engine;
+    constexpr int particle_count = 5;
+    constexpr float x_location = 2.0;
+    constexpr float y_location = 5.0;
+    constexpr float x_speed = 1.0;
+    constexpr float y_speed = 5.0;
+    constexpr float z_speed = 2.0;
+    constexpr float mass_modifier = 2.0;
 
+    solo::engine::Engine engine;
     solo::math::Vector position;
     solo::math::Vector velocity;
+
     // Create and add multiple particles
-    for (int i = 0; i < 5; ++i) {
-        position.Set(2.0 * i, 5.0, i);
-        velocity.Set(1 + i, 5.0, 1 + i);
-        solo::physics::Particle p(1.0 + i * 0.5);  // Varying masses
-        p.SetPosition(position);
-        p.SetVelocity(velocity);  // Moving along X axis
-        engine.AddParticle(p);
+    for (float i = 0; i < particle_count; ++i) {
+        position.Set(x_location * i, y_location, i);
+        velocity.Set(x_speed + i, y_speed, z_speed + i);
+        solo::physics::Particle point(i * mass_modifier);
+        point.SetPosition(position);
+        point.SetVelocity(velocity);  // Moving along X axis
+        engine.AddParticle(point);
     }
 
     std::cout << "Added " << engine.GetParticleCount()
               << " particles to the engine." << std::endl;
 
     // Simulate for a few steps
-    double dt = 0.1;
+    const double time_step = 0.1;
     for (int step = 1; step <= 3; ++step) {
         std::cout << "\n--- Step " << step << " ---" << std::endl;
-        engine.UpdateParticles(dt, engine.GetParticleCount());
+        engine.UpdateParticles(time_step);
 
         // Print positions
         auto& particles = engine.GetParticles();

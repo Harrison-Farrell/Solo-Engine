@@ -25,9 +25,9 @@ void Engine::AddParticle(const physics::Particle& particle) {
     mParticles.push_back(particle);
 }
 
-void Engine::UpdateParticles(double time_step, std::size_t count) {
-    std::size_t update_count = std::min(count, mParticles.size());
-    for (std::size_t i = 0; i < update_count; ++i) {
+void Engine::UpdateParticles(double time_step) {
+    std::size_t particle_count = mParticles.size();
+    for (std::size_t i = 0; i < particle_count; ++i) {
         mParticles[i].Update(time_step);
     }
 }

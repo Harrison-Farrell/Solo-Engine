@@ -36,9 +36,8 @@ class Engine {
     /**
      * @brief Calls update on a provided number of particles.
      * @param time_step Delta time for the physical update.
-     * @param count The maximum number of particles to update.
      */
-    void UpdateParticles(double time_step, std::size_t count);
+    void UpdateParticles(double time_step);
 
     /**
      * @brief Returns the total number of particles currently in the engine.
