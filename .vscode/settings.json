@@ -1,6 +1,10 @@
 {
     "editor.formatOnSave": true,
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+    "C_Cpp.codeAnalysis.exclude": {
+        "**/include/c++/**": true,
+        "/usr/include/**": true
+    },
     "C_Cpp.autoAddFileAssociations": false,
     "files.associations": {
         ".clang-format": "yaml",
@@ -13,5 +17,9 @@
     "[markdown]": {
         "editor.wordWrap": "off"
     },
-    "cSpell.enabled": true
+    "cSpell.enabled": false,
+    "C_Cpp.loggingLevel": "Debug",
+    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+        "clang-diagnostic-error"
+    ]
 }

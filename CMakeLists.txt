@@ -10,7 +10,7 @@
 # -----------------------------------------------------------------------------
 
 # Minimum CMake version required
-cmake_minimum_required(VERSION  3.30)
+cmake_minimum_required(VERSION  3.28)
 
 # Project name and version
 project(SoloEngine VERSION 1.0 LANGUAGES C CXX)

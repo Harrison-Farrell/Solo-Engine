@@ -13,13 +13,10 @@
 #define SOLO_MATH_UNIT_CONVERSIONS_H
 
 #include <cmath>
+#include <numbers>
 
 namespace solo {
 namespace math {
-
-namespace symbols {
-constexpr double PI = 3.14159265358979323846;
-}
 
 /// @brief Radians to Degrees conversion
 /// @tparam Type
@@ -27,7 +24,7 @@ constexpr double PI = 3.14159265358979323846;
 /// @return
 template <class Type>
 inline Type RadToDeg(Type Rad) {
-    return static_cast<Type>(Rad * (180.0 / symbols::PI));
+    return static_cast<Type>(Rad * (180.0 / std::numbers::pi));
 }
 
 /// @brief Degrees to Radians conversion
@@ -36,7 +33,7 @@ inline Type RadToDeg(Type Rad) {
 /// @return
 template <class Type>
 inline Type DegToRad(Type Deg) {
-    return static_cast<Type>(Deg * (symbols::PI / 180.0));
+    return static_cast<Type>(Deg * (std::numbers::pi / 180.0));
 }
 
 template <class Type>

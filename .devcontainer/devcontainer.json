@@ -1,0 +1,31 @@
+{
+  // For more documentation visit https://github.com/devcontainers
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "capAdd": [
+    "SYS_PTRACE"
+  ],
+  "securityOpt": [
+    "seccomp=unconfined"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools-extension-pack",
+        "bierner.markdown-emoji",
+        "cheshirekow.cmake-format",
+        "cschlosser.doxdocgen",
+        "EditorConfig.EditorConfig",
+        "GitHub.vscode-github-actions",
+        "Gruntfuggly.todo-tree",
+        "matepek.vscode-catch2-test-adapter",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.hexeditor",
+        "samubarb.vscode-doxyfile",
+        "usernamehw.errorlens"
+      ]
+    }
+  },
+  "remoteUser": "vscode"
+}

@@ -2,61 +2,114 @@
   "version": 3,
   "configurePresets": [
     {
-      "name": "Default-Release",
-      "description": "Default configuration with all options disabled",
-      "hidden": false,
-      "binaryDir": "${sourceDir}/build/release",
-      "generator": "Ninja Multi-Config",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "clang",
-        "CMAKE_CXX_COMPILER": "clang++",
-        "CMAKE_BUILD_TYPE": "Release",
-        "BUILD_TESTS": "OFF",
-        "BUILD_DOXYGEN": "OFF"
+      "name": "windows-template",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
       }
     },
     {
-      "name": "Developer",
-      "description": "Configuration with all options enabled",
+      "name": "linux-template",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+			"name": "linux-debug",
+			"displayName": "Debug",
       "hidden": false,
-      "binaryDir": "${sourceDir}/build/developer",
+      "binaryDir": "${sourceDir}/build-linux/debug",
+      "inherits": "linux-template",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
+				"CMAKE_CXX_STANDARD": "23",
+				"CMAKE_CXX_STANDARD_REQUIRED": "YES",
+				"CMAKE_CXX_EXTENSIONS": "OFF",
+				"CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
+				"CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install-${presetName}",
+				"DEFAULT_CXX_COMPILE_FLAGS": "-g;-Wextra;-Wall;-Wfloat-equal;-Wundef;-Wpointer-arith;-Wshadow;-Wcast-align;-Wswitch-default;-Wswitch-enum;-Wconversion;-Wpedantic;-Werror",
+				"DEFAULT_CXX_OPTIMIZE_FLAG": "-O0"
+			}
+		},    
+    {
+      "name": "windows-release",
+      "displayName": "Release",
+      "description": "Optimizations on and all options disabled",
+      "hidden": false,
+      "binaryDir": "${sourceDir}/build-windows/release",
+      "inherits": "windows-template",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_TESTS": "OFF",
+        "BUILD_DOXYGEN": "OFF",
+        "DEFAULT_CXX_OPTIMIZE_FLAG": "-O3"
+      }
+    },
+    {
+      "name": "windows-debug",
+      "displayName": "Debug",
+      "description": "Optimizations off and all options enabled",
+      "hidden": false,
+      "binaryDir": "${sourceDir}/build-windows/debug",
       "generator": "Ninja Multi-Config",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++",
         "CMAKE_BUILD_TYPE": "Debug",
         "BUILD_TESTS": "ON",
-        "BUILD_DOXYGEN": "ON"
+        "BUILD_DOXYGEN": "ON",
+        "DEFAULT_CXX_OPTIMIZE_FLAG": "-O0"
       }
     },
     {
-      "name": "Release-with-options",
-      "description": "Release configuration with all options enabled",
+      "name": "windows-release-with-options",
+      "displayName": "Release with options",
+      "description": "Optimizations on and all options enabled",
       "hidden": false,
-      "binaryDir": "${sourceDir}/build/release-with-options",
-      "inherits": "Developer",
+      "binaryDir": "${sourceDir}/build-windows/release-with-options",
+      "inherits": "windows-debug",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "DEFAULT_CXX_OPTIMIZE_FLAG": "-O3"
       }
     }
   ],
   "buildPresets": [
     {
-      "name": "Default-Release-build",
+			"name": "linux-debug",
+			"jobs": 10,
+			"displayName": "Linux Debug Build",
+			"description": "debug build type",
+			"configurePreset": "linux-debug",
+			"configuration": "Debug"
+		},
+    {
+      "name": "windows-release-build",
+      "jobs": 10,
+      "displayName": "Windows Release Build",
       "description": "Build with default release preset",
-      "configurePreset": "Default-Release",
+      "configurePreset": "windows-release",
       "inheritConfigureEnvironment": true
     },
     {
-      "name": "Developer-build",
-      "description": "Build with developer preset",
-      "configurePreset": "Developer",
+      "name": "windows-debug-build",
+      "jobs": 10,
+      "displayName": "Windows Debug Build",
+      "description": "Build with developer presets",
+      "configurePreset": "windows-debug",
       "inheritConfigureEnvironment": true
     },
     {
-      "name": "Release-with-options-build",
+      "name": "release-with-options-build",
+      "jobs": 10,
+      "displayName": "Windows Release & Test Build",
       "description": "Release build with all options",
-      "configurePreset": "Release-with-options",
+      "configurePreset": "windows-release-with-options",
       "inheritConfigureEnvironment": true
     }
   ],
@@ -64,7 +117,7 @@
     {
       "name": "all-enabled-test",
       "description": "Run tests with all-enabled preset",
-      "configurePreset": "Developer",
+      "configurePreset": "windows-debug",
       "inheritConfigureEnvironment": true,
       "output": {
         "outputOnFailure": true

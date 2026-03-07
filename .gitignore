@@ -1,8 +1,11 @@
 # build directories
 build/
+build-windows/
+build-linux/
 vs/
 .vs/
 doxygen/
+out/
 
 # Build results
 [Dd]ebug/
