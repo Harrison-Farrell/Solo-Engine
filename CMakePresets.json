@@ -22,6 +22,7 @@
     {
 			"name": "linux-debug",
 			"displayName": "Debug",
+      "description": "Optimizations on and all options disabled",
       "hidden": false,
       "binaryDir": "${sourceDir}/build-linux/debug",
       "inherits": "linux-template",
@@ -31,7 +32,6 @@
 				"CMAKE_CXX_STANDARD_REQUIRED": "YES",
 				"CMAKE_CXX_EXTENSIONS": "OFF",
 				"CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
-				"CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install-${presetName}",
 				"DEFAULT_CXX_COMPILE_FLAGS": "-g;-Wextra;-Wall;-Wfloat-equal;-Wundef;-Wpointer-arith;-Wshadow;-Wcast-align;-Wswitch-default;-Wswitch-enum;-Wconversion;-Wpedantic;-Werror",
 				"DEFAULT_CXX_OPTIMIZE_FLAG": "-O0"
 			}
@@ -54,6 +54,7 @@
       "name": "windows-debug",
       "displayName": "Debug",
       "description": "Optimizations off and all options enabled",
+      "inherits": "windows-template",
       "hidden": false,
       "binaryDir": "${sourceDir}/build-windows/debug",
       "generator": "Ninja Multi-Config",
@@ -92,7 +93,7 @@
       "name": "windows-release-build",
       "jobs": 10,
       "displayName": "Windows Release Build",
-      "description": "Build with default release preset",
+      "description": "Build with default release Preset",
       "configurePreset": "windows-release",
       "inheritConfigureEnvironment": true
     },
@@ -100,7 +101,7 @@
       "name": "windows-debug-build",
       "jobs": 10,
       "displayName": "Windows Debug Build",
-      "description": "Build with developer presets",
+      "description": "Build with developer Presets",
       "configurePreset": "windows-debug",
       "inheritConfigureEnvironment": true
     },
@@ -116,7 +117,7 @@
   "testPresets": [
     {
       "name": "all-enabled-test",
-      "description": "Run tests with all-enabled preset",
+      "description": "Run tests with all-enabled Preset",
       "configurePreset": "windows-debug",
       "inheritConfigureEnvironment": true,
       "output": {

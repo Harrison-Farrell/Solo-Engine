@@ -26,24 +26,24 @@ int main() {
         position.Set(2.0 * i, 5.0, i);
         velocity.Set(1 + i, 5.0, 1 + i);
         solo::physics::Particle p(1.0 + i * 0.5);  // Varying masses
-        p.setPosition(position);
-        p.setVelocity(velocity);  // Moving along X axis
+        p.SetPosition(position);
+        p.SetVelocity(velocity);  // Moving along X axis
         engine.addParticle(p);
     }
 
-    std::cout << "Added " << engine.getParticleCount()
+    std::cout << "Added " << engine.GetParticleCount()
               << " particles to the engine." << std::endl;
 
     // Simulate for a few steps
     double dt = 0.1;
     for (int step = 1; step <= 3; ++step) {
         std::cout << "\n--- Step " << step << " ---" << std::endl;
-        engine.updateParticles(dt, engine.getParticleCount());
+        engine.updateParticles(dt, engine.GetParticleCount());
 
         // Print positions
-        auto& particles = engine.getParticles();
+        auto& particles = engine.GetParticles();
         for (std::size_t i = 0; i < particles.size(); ++i) {
-            auto pos = particles[i].getPosition();
+            auto pos = particles[i].GetPosition();
             std::cout << "Particle " << i << " Position: (" << pos.GetX()
                       << ", " << pos.GetY() << ", " << pos.GetZ() << ")"
                       << std::endl;

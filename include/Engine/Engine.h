@@ -17,7 +17,6 @@
 
 #include "Particle/Particle.h"
 
-
 namespace solo {
 namespace engine {
 
@@ -45,13 +44,13 @@ class Engine {
      * @brief Returns the total number of particles currently in the engine.
      * @return Number of particles.
      */
-    std::size_t getParticleCount() const;
+    std::size_t GetParticleCount() const;
 
     /**
      * @brief Allows access to the underlying particle collection.
      * @return Reference to the vector of particles.
      */
-    std::vector<physics::Particle>& getParticles();
+    std::vector<physics::Particle>& GetParticles();
 
    private:
     std::vector<physics::Particle> particles_;

@@ -15,55 +15,50 @@ namespace solo {
 namespace physics {
 
 Particle::Particle(double mass)
-    : mass_(mass),
-      position_(),
-      velocity_(),
-      acceleration_(),
-      angle_(),
-      angularVelocity_(),
-      angularAcceleration_() {}
+    : mMass(mass)
+{}
 
-double Particle::getMass() const { return mass_; }
+double Particle::GetMass() const { return mMass; }
 
-math::Vector Particle::getPosition() const { return position_; }
-math::Vector Particle::getVelocity() const { return velocity_; }
-math::Vector Particle::getAcceleration() const { return acceleration_; }
+math::Vector Particle::GetPosition() const { return mPosition; }
+math::Vector Particle::GetVelocity() const { return mVelocity; }
+math::Vector Particle::GetAcceleration() const { return mAcceleration; }
 
-math::Vector Particle::getAngle() const { return angle_; }
-math::Vector Particle::getAngularVelocity() const { return angularVelocity_; }
-math::Vector Particle::getAngularAcceleration() const {
-    return angularAcceleration_;
+math::Vector Particle::GetAngle() const { return mAngle; }
+math::Vector Particle::GetAngularVelocity() const { return mAngularVelocity; }
+math::Vector Particle::GetAngularAcceleration() const {
+    return mAngularAcceleration;
 }
 
-void Particle::setPosition(const math::Vector& position) {
-    position_ = position;
+void Particle::SetPosition(const math::Vector& position) {
+    mPosition = position;
 }
-void Particle::setVelocity(const math::Vector& velocity) {
-    velocity_ = velocity;
+void Particle::SetVelocity(const math::Vector& velocity) {
+    mVelocity = velocity;
 }
-void Particle::setAcceleration(const math::Vector& acceleration) {
-    acceleration_ = acceleration;
-}
-
-void Particle::setAngle(const math::Vector& angle) { angle_ = angle; }
-
-void Particle::setAngularVelocity(const math::Vector& angularVelocity) {
-    angularVelocity_ = angularVelocity;
-}
-void Particle::setAngularAcceleration(const math::Vector& angularAcceleration) {
-    angularAcceleration_ = angularAcceleration;
+void Particle::SetAcceleration(const math::Vector& acceleration) {
+    mAcceleration = acceleration;
 }
 
-void Particle::setMass(double mass) { mass_ = mass; }
+void Particle::SetAngle(const math::Vector& angle) { mAngle = angle; }
 
-void Particle::update(double dt) {
+void Particle::SetAngularVelocity(const math::Vector& angularVelocity) {
+    mAngularVelocity = angularVelocity;
+}
+void Particle::SetAngularAcceleration(const math::Vector& angularAcceleration) {
+    mAngularAcceleration = angularAcceleration;
+}
+
+void Particle::SetMass(double mass) { mMass = mass; }
+
+void Particle::Update(double time_step) {
     // Integrate linear motion
-    velocity_ += acceleration_ * dt;
-    position_ += velocity_ * dt;
+    mVelocity += mAcceleration * time_step;
+    mPosition += mVelocity * time_step;
 
     // Integrate angular motion
-    angularVelocity_ += angularAcceleration_ * dt;
-    angle_ += angularVelocity_ * dt;
+    mAngularVelocity += mAngularVelocity * time_step;
+    mAngle += mAngularVelocity * time_step;
 }
 
 }  // namespace physics

@@ -30,41 +30,41 @@ class Particle {
     Particle(double mass = 1.0);
 
     // Getters
-    double getMass() const;
-    math::Vector getPosition() const;
-    math::Vector getVelocity() const;
-    math::Vector getAcceleration() const;
-    math::Vector getAngle() const;
-    math::Vector getAngularVelocity() const;
-    math::Vector getAngularAcceleration() const;
+    double GetMass() const;
+    math::Vector GetPosition() const;
+    math::Vector GetVelocity() const;
+    math::Vector GetAcceleration() const;
+    math::Vector GetAngle() const;
+    math::Vector GetAngularVelocity() const;
+    math::Vector GetAngularAcceleration() const;
     // Setters
-    void setMass(double mass);
-    void setPosition(const math::Vector& position);
-    void setVelocity(const math::Vector& velocity);
-    void setAcceleration(const math::Vector& acceleration);
-    void setAngle(const math::Vector& angle);
-    void setAngularVelocity(const math::Vector& angularVelocity);
-    void setAngularAcceleration(const math::Vector& angularAcceleration);
+    void SetMass(double mass);
+    void SetPosition(const math::Vector& position);
+    void SetVelocity(const math::Vector& velocity);
+    void SetAcceleration(const math::Vector& acceleration);
+    void SetAngle(const math::Vector& angle);
+    void SetAngularVelocity(const math::Vector& angularVelocity);
+    void SetAngularAcceleration(const math::Vector& angularAcceleration);
 
     /**
-     * @brief Update the particle's position based on its velocity and a time
+     * @brief Update the particle's position based on its v`elocity and a time
      * step.
-     * @param dt Delta time for the physical update.
+     * @param time_step Delta time for the physical update.
      */
-    void update(double dt);
+    void Update(double time_step);
 
    private:
-    double mass_;
+    double mMass;
 
     // Position
-    math::Vector position_;
-    math::Vector velocity_;
-    math::Vector acceleration_;
+    math::Vector mPosition;
+    math::Vector mVelocity;
+    math::Vector mAcceleration;
 
     // Angle (Rotation)
-    math::Vector angle_;
-    math::Vector angularVelocity_;
-    math::Vector angularAcceleration_;
+    math::Vector mAngle;
+    math::Vector mAngularVelocity;
+    math::Vector mAngularAcceleration;
 };
 
 }  // namespace physics

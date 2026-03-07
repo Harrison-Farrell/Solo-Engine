@@ -23,13 +23,13 @@ void Engine::addParticle(const physics::Particle& particle) {
 void Engine::updateParticles(double dt, std::size_t count) {
     std::size_t updateCount = std::min(count, particles_.size());
     for (std::size_t i = 0; i < updateCount; ++i) {
-        particles_[i].update(dt);
+        particles_[i].Update(dt);
     }
 }
 
-std::size_t Engine::getParticleCount() const { return particles_.size(); }
+std::size_t Engine::GetParticleCount() const { return particles_.size(); }
 
-std::vector<physics::Particle>& Engine::getParticles() { return particles_; }
+std::vector<physics::Particle>& Engine::GetParticles() { return particles_; }
 
 }  // namespace engine
 }  // namespace solo

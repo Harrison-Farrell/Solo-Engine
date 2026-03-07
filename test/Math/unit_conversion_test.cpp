@@ -11,9 +11,9 @@
 
 #include <gtest/gtest.h>
 
-#include "Math/UnitConversions.h"
-
 #include <numbers>
+
+#include "Math/UnitConversions.h"
 
 // anonymous namespace to prevent name collisions
 namespace {
@@ -21,15 +21,13 @@ namespace {
 TEST(UnitConversion, DegToRad) {
     EXPECT_NEAR(0.261799, solo::math::DegToRad((double)15), 0.001);
     EXPECT_NEAR(-1.5708, solo::math::DegToRad((double)-90), 0.001);
-    EXPECT_NEAR(std::numbers::pi, solo::math::DegToRad((double)180),
-                0.001);
+    EXPECT_NEAR(std::numbers::pi, solo::math::DegToRad((double)180), 0.001);
 }
 
 TEST(UnitConversion, RadToDeg) {
     EXPECT_NEAR(15, solo::math::RadToDeg((double)0.261799), 0.001);
     EXPECT_NEAR(-90, solo::math::RadToDeg((double)-1.5708), 0.001);
-    EXPECT_NEAR(180, solo::math::RadToDeg((double)std::numbers::pi),
-                0.001);
+    EXPECT_NEAR(180, solo::math::RadToDeg((double)std::numbers::pi), 0.001);
 }
 
 TEST(UnitConversion, FeetToMeters) {
