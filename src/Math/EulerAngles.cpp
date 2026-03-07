@@ -12,7 +12,7 @@
 #include "Math/EulerAngles.h"
 
 #include <stdexcept>
-#include <string>
+#include <string>  // NOLINT(misc-include-cleaner) std::to_string()
 
 #include "Math/UnitConversions.h"
 

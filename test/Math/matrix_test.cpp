@@ -144,7 +144,7 @@ TEST(test_matrix, in_place_transpose) {
     m1.data[0][1] = 3;
     m1.data[0][2] = 3;
 
-    m1.inPlaceTranspose();
+    m1.InPlaceTranspose();
     ASSERT_EQ(m1.data[0][0], 3);
     ASSERT_EQ(m1.data[0][1], 0);
     ASSERT_EQ(m1.data[0][2], 0);

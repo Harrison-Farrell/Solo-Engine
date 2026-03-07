@@ -12,120 +12,131 @@
 #include "Math/Vector.h"
 
 #include <cmath>
+#include <cstdint>
 #include <stdexcept>
-#include <string>
+#include <string>  // NOLINT(misc-include-cleaner) std::to_string()
 
-solo::math::Vector::Vector(float x, float y, float z) : x_{x}, y_{y}, z_{z} {};
+solo::math::Vector::Vector(float x_value, float y_value, float z_value)
+    : mXValue{x_value}, mYValue{y_value}, mZValue{z_value} {};
 
-void solo::math::Vector::Set(float x, float y, float z) {
-    x_ = x;
-    y_ = y;
-    z_ = z;
+void solo::math::Vector::Set(float x_value, float y_value, float z_value) {
+    mXValue = x_value;
+    mYValue = y_value;
+    mZValue = z_value;
 }
 
 float solo::math::Vector::GetMagnitude() const {
-    return sqrt((x_ * x_) + (y_ * y_) + (z_ * z_));
+    return sqrt((mXValue * mXValue) + (mYValue * mYValue) +
+                (mZValue * mZValue));
 }
 
-float solo::math::Vector::GetDistance(const solo::math::Vector& vec) {
-    Vector v = *this - vec;
-    return v.GetMagnitude();
+float solo::math::Vector::GetDistance(const solo::math::Vector& vec) const {
+    const Vector return_distance = *this - vec;
+    return return_distance.GetMagnitude();
 }
 
-bool solo::math::Vector::operator==(const solo::math::Vector& Value) const {
-    if (x_ != Value.x_) return false;
-    if (y_ != Value.y_) return false;
-    if (z_ != Value.z_) return false;
+bool solo::math::Vector::operator==(const solo::math::Vector& value) const {
+    if (mXValue != value.mXValue) {
+        return false;
+    };
+    if (mYValue != value.mYValue) {
+        return false;
+    };
+    if (mZValue != value.mZValue) {
+        return false;
+    };
     return true;
 }
 
-bool solo::math::Vector::operator!=(const solo::math::Vector& Value) const {
-    return !(*this == Value);
+bool solo::math::Vector::operator!=(const solo::math::Vector& value) const {
+    return !(*this == value);
 }
 
 solo::math::Vector solo::math::Vector::operator*(
-    const solo::math::Vector& Value) const {
+    const solo::math::Vector& value) const {
     solo::math::Vector tmp = *this;
-    tmp.x_ *= Value.x_;
-    tmp.y_ *= Value.y_;
-    tmp.z_ *= Value.z_;
+    tmp.mXValue *= value.mXValue;
+    tmp.mYValue *= value.mYValue;
+    tmp.mZValue *= value.mZValue;
     return tmp;
 }
 
-solo::math::Vector solo::math::Vector::operator*(double Value) const {
+solo::math::Vector solo::math::Vector::operator*(double value) const {
     solo::math::Vector tmp = *this;
-    tmp.x_ *= Value;
-    tmp.y_ *= Value;
-    tmp.z_ *= Value;
+    tmp.mXValue *= (float)value;
+    tmp.mYValue *= (float)value;
+    tmp.mZValue *= (float)value;
     return tmp;
 }
 
-solo::math::Vector solo::math::Vector::operator*(float Value) const {
+solo::math::Vector solo::math::Vector::operator*(float value) const {
     solo::math::Vector tmp = *this;
-    tmp.x_ *= Value;
-    tmp.y_ *= Value;
-    tmp.z_ *= Value;
+    tmp.mXValue *= value;
+    tmp.mYValue *= value;
+    tmp.mZValue *= value;
     return tmp;
 }
 
 solo::math::Vector solo::math::Vector::operator+(
-    const solo::math::Vector& Value) const {
+    const solo::math::Vector& value) const {
     solo::math::Vector tmp = *this;
-    tmp.x_ += Value.x_;
-    tmp.y_ += Value.y_;
-    tmp.z_ += Value.z_;
+    tmp.mXValue += value.mXValue;
+    tmp.mYValue += value.mYValue;
+    tmp.mZValue += value.mZValue;
     return tmp;
 }
 
 solo::math::Vector& solo::math::Vector::operator+=(
-    const solo::math::Vector& Value) {
-    x_ += Value.x_;
-    y_ += Value.y_;
-    z_ += Value.z_;
+    const solo::math::Vector& value) {
+    mXValue += value.mXValue;
+    mYValue += value.mYValue;
+    mZValue += value.mZValue;
     return *this;
 }
 
 solo::math::Vector solo::math::Vector::operator-(
-    const solo::math::Vector& Value) const {
+    const solo::math::Vector& value) const {
     solo::math::Vector tmp = *this;
-    tmp.x_ -= Value.x_;
-    tmp.y_ -= Value.y_;
-    tmp.z_ -= Value.z_;
+    tmp.mXValue -= value.mXValue;
+    tmp.mYValue -= value.mYValue;
+    tmp.mZValue -= value.mZValue;
     return tmp;
 }
 
 solo::math::Vector& solo::math::Vector::operator-=(
-    const solo::math::Vector& Value) {
-    x_ -= Value.x_;
-    y_ -= Value.y_;
-    z_ -= Value.z_;
+    const solo::math::Vector& value) {
+    mXValue -= value.mXValue;
+    mYValue -= value.mYValue;
+    mZValue -= value.mZValue;
     return *this;
 }
 
-float& solo::math::Vector::operator[](uint16_t i) {
-    switch (i) {
+float& solo::math::Vector::operator[](uint16_t position) {
+    switch (position) {
         case 0:
-            return x_;
+            return mXValue;
         case 1:
-            return y_;
+            return mYValue;
         case 2:
-            return z_;
+            return mZValue;
         default:
-            throw std::out_of_range("Vector index: " + std::to_string(i) +
-                                    " is out of range");
+            throw std::out_of_range(
+                "Vector index: " + std::to_string(position) +
+                " is out of range");
     };
 }
 
-const float& solo::math::Vector::operator[](uint16_t i) const {
-    switch (i) {
+const float& solo::math::Vector::operator[](uint16_t position) const {
+    switch (position) {
         case 0:
-            return x_;
+            return mXValue;
         case 1:
-            return y_;
+            return mYValue;
         case 2:
-            return z_;
+            return mZValue;
         default:
-            throw std::out_of_range("Vector index: " + std::to_string(i) +
-                                    " is out of range");
+            throw std::out_of_range(
+                "Vector index: " + std::to_string(position) +
+                " is out of range");
     }
 }

@@ -25,20 +25,20 @@ namespace engine {
  */
 class Engine {
    public:
-    Engine() = default;
+    Engine();
 
     /**
      * @brief Adds a particle to the engine's management.
      * @param particle The particle to add.
      */
-    void addParticle(const physics::Particle& particle);
+    void AddParticle(const physics::Particle& particle);
 
     /**
      * @brief Calls update on a provided number of particles.
-     * @param dt Delta time for the physical update.
+     * @param time_step Delta time for the physical update.
      * @param count The maximum number of particles to update.
      */
-    void updateParticles(double dt, std::size_t count);
+    void UpdateParticles(double time_step, std::size_t count);
 
     /**
      * @brief Returns the total number of particles currently in the engine.
@@ -53,7 +53,7 @@ class Engine {
     std::vector<physics::Particle>& GetParticles();
 
    private:
-    std::vector<physics::Particle> particles_;
+    std::vector<physics::Particle> mParticles;
 };
 
 }  // namespace engine

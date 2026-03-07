@@ -30,40 +30,45 @@ class Vector {
     /// @param x-axis float
     /// @param y-axis float
     /// @param z-axis float
-    Vector(float x, float y, float z);
+    Vector(float x_value, float y_value, float z_value);
 
     /// @brief Deconstruct the Vector object
     ~Vector() = default;
 
+    Vector(const Vector&) = default;
+    Vector(Vector&&) = default;
+    Vector& operator=(const Vector&) = default;
+    Vector& operator=(Vector&&) = default;
+
     /// @brief Set x axis value
     /// @param x value
-    void SetX(float x) { x_ = x; }
+    void SetX(float x_value) { mXValue = x_value; }
 
     /// @brief Get x axis value
     /// @return x value
-    float GetX() const { return x_; }
+    float GetX() const { return mXValue; }
 
     /// @brief Set y axis value
     /// @param y value
-    void SetY(float y) { y_ = y; }
+    void SetY(float y_value) { mYValue = y_value; }
 
     /// @brief Get y axis value
     /// @return y value
-    float GetY() const { return y_; }
+    float GetY() const { return mYValue; }
 
     /// @brief Set z axis value
     /// @param z value
-    void SetZ(float z) { z_ = z; }
+    void SetZ(float z_value) { mZValue = z_value; }
 
     /// @brief Get z axis value
     /// @return z value
-    float GetZ() const { return z_; }
+    float GetZ() const { return mZValue; }
 
     /// @brief Set all three points of the vector
     /// @param x value
     /// @param y value
     /// @param z value
-    void Set(float x, float y, float z);
+    void Set(float x_value, float y_value, float z_value);
 
     /// @brief Calculates and returns the magnitude or length.
     /// @return magnitude
@@ -72,25 +77,25 @@ class Vector {
     /// @brief Calculates the distance from this vector to an other.
     /// @param vec to calculate distance to
     /// @return float distance
-    float GetDistance(const Vector& vec);
+    float GetDistance(const Vector& vec) const;
 
-    bool operator==(const Vector& Value) const;
-    bool operator!=(const Vector& Value) const;
-    Vector operator*(const Vector& Value) const;
-    Vector operator*(double Value) const;
-    Vector operator*(float Value) const;
-    Vector operator+(const Vector& Value) const;
-    Vector& operator+=(const Vector& Value);
-    Vector operator-(const Vector& Value) const;
-    Vector& operator-=(const Vector& Value);
+    bool operator==(const Vector& value) const;
+    bool operator!=(const Vector& value) const;
+    Vector operator*(const Vector& value) const;
+    Vector operator*(double value) const;
+    Vector operator*(float value) const;
+    Vector operator+(const Vector& value) const;
+    Vector& operator+=(const Vector& value);
+    Vector operator-(const Vector& value) const;
+    Vector& operator-=(const Vector& value);
 
-    float& operator[](uint16_t i);
-    const float& operator[](uint16_t i) const;
+    float& operator[](uint16_t position);
+    const float& operator[](uint16_t position) const;
 
-   protected:
-    float x_{0};
-    float y_{0};
-    float z_{0};
+   private:
+    float mXValue{0};
+    float mYValue{0};
+    float mZValue{0};
 };
 }  // namespace math
 }  // namespace solo

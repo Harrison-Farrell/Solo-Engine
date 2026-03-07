@@ -28,7 +28,7 @@ int main() {
         solo::physics::Particle p(1.0 + i * 0.5);  // Varying masses
         p.SetPosition(position);
         p.SetVelocity(velocity);  // Moving along X axis
-        engine.addParticle(p);
+        engine.AddParticle(p);
     }
 
     std::cout << "Added " << engine.GetParticleCount()
@@ -38,7 +38,7 @@ int main() {
     double dt = 0.1;
     for (int step = 1; step <= 3; ++step) {
         std::cout << "\n--- Step " << step << " ---" << std::endl;
-        engine.updateParticles(dt, engine.GetParticleCount());
+        engine.UpdateParticles(dt, engine.GetParticleCount());
 
         // Print positions
         auto& particles = engine.GetParticles();

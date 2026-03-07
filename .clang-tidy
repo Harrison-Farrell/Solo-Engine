@@ -28,7 +28,7 @@ ImplementationFileExtensions:
   - cpp
   - cxx
 HeaderFilterRegex: '.*'
-ExcludeHeaderFilterRegex: 'googletest|gmmock|gtest'
+ExcludeHeaderFilterRegex: 'googletest|gmock|gtest'
 FormatStyle: "file"
 WarningsAsErrors: ''
 CheckOptions:
@@ -38,5 +38,6 @@ CheckOptions:
   readability-identifier-naming.ClassMethodCase: 'CamelCase'
   readability-identifier-naming.FunctionCase: 'CamelCase' 
   readability-identifier-naming.LocalVariableCase: 'lower_case'
+  readability-identifier-naming.ParameterCase: 'lower_case'
 ...
 

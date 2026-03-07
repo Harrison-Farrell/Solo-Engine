@@ -42,10 +42,11 @@ class Matrix {
     Matrix() {
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                if (i == j)
+                if (i == j) {
                     data[i][j] = 1;
-                else
+                } else {
                     data[i][j] = 0;
+                }
             }
         }
     };
@@ -55,14 +56,14 @@ class Matrix {
      * @param Matrix
      */
     Matrix operator+(const Matrix& Value) {
-        Matrix m = *this;
+        Matrix matrix = *this;
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                m.data[i][j] += Value.data[i][j];
+                matrix.data[i][j] += Value.data[i][j];
             }
         }
 
-        return m;
+        return matrix;
     };
 
     /**
@@ -84,14 +85,14 @@ class Matrix {
      * @param Matrix
      */
     Matrix operator-(const Matrix& Value) {
-        Matrix m = *this;
+        Matrix matrix = *this;
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                m.data[i][j] -= Value.data[i][j];
+                matrix.data[i][j] -= Value.data[i][j];
             }
         }
 
-        return m;
+        return matrix;
     };
 
     /**
@@ -113,7 +114,7 @@ class Matrix {
      * @param Matrix
      */
     Matrix operator*(const Matrix& Value) {
-        Matrix m;
+        Matrix matrix;
 
         for (uint16_t i = 0; i < rows; ++i) {
             for (uint16_t j = 0; j < cols; ++j) {
@@ -122,10 +123,10 @@ class Matrix {
                     sum += this->data[i][k] * Value.data[k][j];
                 }
 
-                m.data[i][j] = sum;
+                matrix.data[i][j] = sum;
             }
         }
-        return m;
+        return matrix;
     };
 
     /**
@@ -133,7 +134,7 @@ class Matrix {
      * @param Matrix
      */
     Matrix operator*=(const Matrix& Value) {
-        Matrix m;
+        Matrix matrix;
 
         for (uint16_t i = 0; i < rows; ++i) {
             for (uint16_t j = 0; j < cols; ++j) {
@@ -142,11 +143,11 @@ class Matrix {
                     sum += this->data[i][k] * Value.data[k][j];
                 }
 
-                m.data[i][j] = sum;
+                matrix.data[i][j] = sum;
             }
         }
-        std::memcpy(this->data, m.data, sizeof(Type) * rows * cols);
-        return m;
+        this->data = std::move(matrix.data);
+        return matrix;
     };
 
     /**
@@ -155,14 +156,14 @@ class Matrix {
      */
     template <class T>
     Matrix operator*(const T Value) {
-        Matrix m = *this;
+        Matrix matrix = *this;
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
-                m.data[i][j] *= Value;
+                matrix.data[i][j] *= Value;
             }
         }
 
-        return m;
+        return matrix;
     };
 
     /**
@@ -190,7 +191,7 @@ class Matrix {
         return res;
     };
 
-    void inPlaceTranspose() {
+    void InPlaceTranspose() {
         if (cols != rows) return;
 
         for (uint16_t i = 0; i < rows; ++i) {
@@ -203,16 +204,17 @@ class Matrix {
     /**
      * @brief Ostream operator for printing Matrix
      * @param os stream output
-     * @param m Matrix
+     * @param matrix Matrix
      */
-    friend std::ostream& operator<<(std::ostream& os, const Matrix& m) {
+    friend std::ostream& operator<<(std::ostream& stream,
+                                    const Matrix& matrix) {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                os << m.data[i][j] << " ";
+                stream << matrix.data[i][j] << " ";
             }
-            os << "\n";  // Add newline after each row
+            stream << "\n";  // Add newline after each row
         }
-        return os;  // Return stream for chaining
+        return stream;  // Return stream for chaining
     }
 };
 

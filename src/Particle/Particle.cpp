@@ -11,12 +11,12 @@
 
 #include "Particle/Particle.h"
 
+#include "Math/Vector.h"
+
 namespace solo {
 namespace physics {
 
-Particle::Particle(double mass)
-    : mMass(mass)
-{}
+Particle::Particle(double mass) : mMass(mass) {}
 
 double Particle::GetMass() const { return mMass; }
 
