@@ -14,24 +14,21 @@
 
 #include "Math/Matrix.h"
 #include "Math/Vector.h"
+#include "Coordinates/WorldCoordinates.h"
 
 namespace solo {
 namespace physics {
 
-/**
- * @brief Represents a physical particle in 3D space.
- */
+/// @brief Represents a physical particle in 3D space.
 class Particle {
    public:
-    /**
-     * @brief Constructs a new Particle object.
-     * @param mass The mass of the particle. Default is 1.0.
-     */
+    /// @brief Constructs a new Particle object.
+    /// @param mass The mass of the particle. Default is 1.0.
     Particle(double mass = 1.0);
 
     // Getters
     double GetMass() const;
-    math::Vector GetPosition() const;
+    math::WorldCoordinates GetPosition() const;
     math::Vector GetVelocity() const;
     math::Vector GetAcceleration() const;
     math::Vector GetAngle() const;
@@ -39,25 +36,22 @@ class Particle {
     math::Vector GetAngularAcceleration() const;
     // Setters
     void SetMass(double mass);
-    void SetPosition(const math::Vector& position);
+    void SetPosition(const math::WorldCoordinates& position);
     void SetVelocity(const math::Vector& velocity);
     void SetAcceleration(const math::Vector& acceleration);
     void SetAngle(const math::Vector& angle);
     void SetAngularVelocity(const math::Vector& angular_velocity);
     void SetAngularAcceleration(const math::Vector& angular_acceleration);
 
-    /**
-     * @brief Update the particle's position based on its v`elocity and a time
-     * step.
-     * @param time_step Delta time for the physical update.
-     */
+    /// @brief Update the particle's position based on its velocity and a time step.
+    /// @param time_step Delta time for the physical update.
     void Update(double time_step);
 
    private:
     double mMass;
 
     // Position
-    math::Vector mPosition;
+    math::WorldCoordinates mPosition;
     math::Vector mVelocity;
     math::Vector mAcceleration;
 

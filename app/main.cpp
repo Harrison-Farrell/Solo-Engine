@@ -14,6 +14,7 @@
 
 #include "Engine/Engine.h"
 #include "Math/Vector.h"
+#include "Coordinates/WorldCoordinates.h"
 #include "Particle/Particle.h"
 
 int main() {
@@ -28,16 +29,16 @@ int main() {
     constexpr float mass_modifier = 2.0;
 
     solo::engine::Engine engine;
-    solo::math::Vector position;
+    solo::math::WorldCoordinates position;
     solo::math::Vector velocity;
 
     // Create and add multiple particles
     for (int i = 0; i < particle_count; ++i) {
-        position.Set(x_location * static_cast<float>(i), y_location,
-                     static_cast<float>(i));
+        position.Set(static_cast<double>(x_location) * i, static_cast<double>(y_location),
+                     static_cast<double>(i));
         velocity.Set(x_speed + static_cast<float>(i), y_speed,
                      z_speed + static_cast<float>(i));
-        solo::physics::Particle point(static_cast<float>(i) * mass_modifier);
+        solo::physics::Particle point(static_cast<double>(i) * mass_modifier);
         point.SetPosition(position);
         point.SetVelocity(velocity);  // Moving along X axis
         engine.AddParticle(point);

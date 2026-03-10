@@ -15,6 +15,7 @@ target_link_libraries(Simulator
     PRIVATE
         solo_engine::Engine
         solo_engine::Math
+        solo_engine::Coordinates
         solo_engine::Particle
 )
 

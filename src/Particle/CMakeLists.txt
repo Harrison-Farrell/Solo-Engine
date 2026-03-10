@@ -25,4 +25,5 @@ target_include_directories(Particle
 target_link_libraries(Particle
     PRIVATE
         solo_engine::Math
+        solo_engine::Coordinates
 )

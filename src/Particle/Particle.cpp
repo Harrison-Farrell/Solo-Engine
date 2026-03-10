@@ -12,6 +12,7 @@
 #include "Particle/Particle.h"
 
 #include "Math/Vector.h"
+#include "Coordinates/WorldCoordinates.h"
 
 namespace solo {
 namespace physics {
@@ -20,7 +21,7 @@ Particle::Particle(double mass) : mMass(mass) {}
 
 double Particle::GetMass() const { return mMass; }
 
-math::Vector Particle::GetPosition() const { return mPosition; }
+math::WorldCoordinates Particle::GetPosition() const { return mPosition; }
 math::Vector Particle::GetVelocity() const { return mVelocity; }
 math::Vector Particle::GetAcceleration() const { return mAcceleration; }
 
@@ -30,7 +31,7 @@ math::Vector Particle::GetAngularAcceleration() const {
     return mAngularAcceleration;
 }
 
-void Particle::SetPosition(const math::Vector& position) {
+void Particle::SetPosition(const math::WorldCoordinates& position) {
     mPosition = position;
 }
 void Particle::SetVelocity(const math::Vector& velocity) {
