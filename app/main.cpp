@@ -9,15 +9,34 @@
 // See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
 // -----------------------------------------------------------------------------
 
+#include <atomic>
+#include <csignal>
 #include <cstddef>
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 #include "Engine/Engine.h"
 #include "Math/Vector.h"
 #include "Coordinates/WorldCoordinates.h"
 #include "Particle/Particle.h"
 
+// Global flag to track if the application should keep running
+// Using std::atomic flag ensures thread-safe reads and writes
+std::atomic<bool> g_running{true};
+
+// Signal handler for SIGINT (Ctrl+C)
+void signal_handler(int signal) {
+    if (signal == SIGINT) {
+        std::cout << "\nReceived Ctrl+C (SIGINT). Stopping simulation..." << "\n";
+        g_running = false;
+    }
+}
+
 int main() {
+    // Register the signal handler
+    std::signal(SIGINT, signal_handler);
+
     std::cout << "Starting Particle Engine Demo..." << "\n";
 
     constexpr int particle_count = 5;
@@ -47,9 +66,13 @@ int main() {
     std::cout << "Added " << engine.GetParticleCount()
               << " particles to the engine." << "\n";
 
-    // Simulate for a few steps
+    // Setup signal handler loop
+    std::cout << "Running simulation loop. Press Ctrl+C to stop..." << "\n";
+    
+    int step = 1;
     const double time_step = 0.1;
-    for (int step = 1; step <= 3; ++step) {
+    
+    while (g_running) {
         std::cout << "\n--- Step " << step << " ---" << "\n";
         engine.UpdateParticles(time_step);
 
@@ -61,7 +84,11 @@ int main() {
                       << ", " << pos.GetY() << ", " << pos.GetZ() << ")"
                       << "\n";
         }
+        
+        step++;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
+    std::cout << "\nSimulation stopped gracefully." << "\n";
     return 0;
 }
