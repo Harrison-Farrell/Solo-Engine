@@ -25,21 +25,17 @@
 namespace solo {
 namespace math {
 
-/**
- * @brief Templated class for performing Matrix mathematics
- * @param Class Type
- * @param Number of columns
- * @param Number of rows
- */
+/// @brief Templated class for performing Matrix mathematics
+/// @param Class Type
+/// @param Number of columns
+/// @param Number of rows
 template <class Type, uint8_t cols, uint8_t rows>
 class Matrix {
    public:
     std::array<std::array<Type, cols>, rows> mData;
 
-    /**
-     * @brief Default on constructor
-     * @note Matrix initially set as an identity matrix
-     */
+    /// @brief Default on constructor
+    /// @note Matrix initially set as an identity matrix
     Matrix() {
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
@@ -52,10 +48,8 @@ class Matrix {
         }
     };
 
-    /**
-     * @brief Addition binary operator overload.
-     * @param Matrix
-     */
+    /// @brief Addition binary operator overload.
+    /// @param Matrix
     Matrix operator+(const Matrix& value) {
         Matrix matrix = *this;
         for (uint16_t i = 0; i < cols; ++i) {
@@ -67,10 +61,8 @@ class Matrix {
         return matrix;
     };
 
-    /**
-     * @brief Addition assignment operator overload.
-     * @param Matrix
-     */
+    /// @brief Addition assignment operator overload.
+    /// @param Matrix
     Matrix& operator+=(const Matrix& value) {
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
@@ -81,10 +73,8 @@ class Matrix {
         return *this;
     };
 
-    /**
-     * @brief Subtraction binary operator overload.
-     * @param Matrix
-     */
+    /// @brief Subtraction binary operator overload.
+    /// @param Matrix
     Matrix operator-(const Matrix& value) {
         Matrix matrix = *this;
         for (uint16_t i = 0; i < cols; ++i) {
@@ -96,10 +86,8 @@ class Matrix {
         return matrix;
     };
 
-    /**
-     * @brief Subtraction assignment operator overload.
-     * @param Matrix
-     */
+    /// @brief Subtraction assignment operator overload.
+    /// @param Matrix
     Matrix& operator-=(const Matrix& value) {
         for (uint16_t i = 0; i < cols; ++i) {
             for (uint16_t j = 0; j < rows; ++j) {
@@ -110,10 +98,8 @@ class Matrix {
         return *this;
     };
 
-    /**
-     * @brief Multiplication binary operator overload.
-     * @param Matrix
-     */
+    /// @brief Multiplication binary operator overload.
+    /// @param Matrix
     Matrix operator*(const Matrix& value) {
         Matrix matrix;
 
@@ -130,10 +116,8 @@ class Matrix {
         return matrix;
     };
 
-    /**
-     * @brief Multiplication binary operator overload.
-     * @param Matrix
-     */
+    /// @brief Multiplication binary operator overload.
+    /// @param Matrix
     Matrix operator*=(const Matrix& value) {
         Matrix matrix;
 
@@ -151,10 +135,8 @@ class Matrix {
         return matrix;
     };
 
-    /**
-     * @brief Matrix scalar multiplication
-     * @param T scalar value
-     */
+    /// @brief Matrix scalar multiplication
+    /// @param T scalar value
     template <class T>
     Matrix operator*(const T value) {
         Matrix matrix = *this;
@@ -167,10 +149,8 @@ class Matrix {
         return matrix;
     };
 
-    /**
-     * @brief Matrix scalar assignment multiplication
-     * @param T scalar value
-     */
+    /// @brief Matrix scalar assignment multiplication
+    /// @param T scalar value
     template <class T>
     Matrix& operator*=(const T value) {
         for (uint16_t i = 0; i < cols; ++i) {
@@ -204,11 +184,9 @@ class Matrix {
         }
     }
 
-    /**
-     * @brief Ostream operator for printing Matrix
-     * @param os stream output
-     * @param matrix Matrix
-     */
+    /// @brief Ostream operator for printing Matrix
+    /// @param os stream output
+    /// @param matrix Matrix
     friend std::ostream& operator<<(std::ostream& stream,
                                     const Matrix& matrix) {
         for (uint8_t i = 0; i < rows; ++i) {
@@ -221,9 +199,7 @@ class Matrix {
     }
 };
 
-/**
- * @brief 3x3 Matrix of type float
- */
+/// @brief 3x3 Matrix of type float
 using Matrix3d = Matrix<float, 3, 3>;
 
 }  // namespace math

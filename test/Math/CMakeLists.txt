@@ -12,3 +12,4 @@
 AddTests(matrix_test)
 AddTests(vector_test)
 AddTests(unit_conversion_test)
+AddTests(euler_angles_test)

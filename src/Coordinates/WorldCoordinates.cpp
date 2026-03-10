@@ -9,7 +9,7 @@
 // See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
 // -----------------------------------------------------------------------------
 
-#include "Math/WorldCoordinates.h"
+#include "Coordinates/WorldCoordinates.h"
 
 #include <cmath>
 #include <cstdint>

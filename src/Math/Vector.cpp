@@ -63,9 +63,9 @@ solo::math::Vector solo::math::Vector::operator*(
 
 solo::math::Vector solo::math::Vector::operator*(double value) const {
     solo::math::Vector tmp = *this;
-    tmp.mXValue *= (float)value;
-    tmp.mYValue *= (float)value;
-    tmp.mZValue *= (float)value;
+    tmp.mXValue *= static_cast<float>(value);
+    tmp.mYValue *= static_cast<float>(value);
+    tmp.mZValue *= static_cast<float>(value);
     return tmp;
 }
 

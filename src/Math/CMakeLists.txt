@@ -17,7 +17,6 @@ target_sources(Math
         Kinematics.cpp
         Vector.cpp
         EulerAngles.cpp
-        WorldCoordinates.cpp
 )
 
 target_include_directories(Math

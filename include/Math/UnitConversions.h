@@ -25,34 +25,48 @@ static constexpr double kSixty = 60.0;
 static constexpr double kThreeThousandSixHundred = 3600;
 }  // namespace constant
 
-/// @brief Radians to Degrees conversion
-/// @tparam Type
-/// @param Rad
-/// @return
+/// @brief Radians to degrees conversion
+/// @tparam Type Numeric type
+/// @param rad Value in radians
+/// @return Value in degrees
 template <class Type>
 inline Type RadToDeg(Type rad) {
     return static_cast<Type>(rad * (constant::k2PI / std::numbers::pi));
 }
 
-/// @brief Degrees to Radians conversion
-/// @tparam Type
-/// @param Deg
-/// @return
+/// @brief Degrees to radians conversion
+/// @tparam Type Numeric type
+/// @param deg Value in degrees
+/// @return Value in radians
 template <class Type>
 inline Type DegToRad(Type deg) {
     return static_cast<Type>(deg * (std::numbers::pi / constant::k2PI));
 }
 
+/// @brief Feet to meters conversion
+/// @tparam Type Numeric type
+/// @param feet Value in feet
+/// @return Value in meters
 template <class Type>
 inline Type FeetToMeters(Type feet) {
     return static_cast<Type>(feet / constant::kFeet2Meters);
 }
 
+/// @brief Meters to feet conversion
+/// @tparam Type Numeric type
+/// @param meters Value in meters
+/// @return Value in feet
 template <class Type>
 inline Type MetersToFeet(Type meters) {
     return static_cast<Type>(meters * constant::kFeet2Meters);
 }
 
+/// @brief Decimal degrees to Degrees, Minutes, Seconds (DMS) conversion
+/// @tparam Type Numeric type
+/// @param decimal Value in decimal degrees
+/// @param degrees_out Output parameter for degrees
+/// @param minutes_out Output parameter for minutes
+/// @param seconds_out Output parameter for seconds
 template <class Type>
 inline void DecimalToDMS(Type decimal, Type& degrees_out, Type& minutes_out,
                          Type& seconds_out) {
@@ -70,6 +84,12 @@ inline void DecimalToDMS(Type decimal, Type& degrees_out, Type& minutes_out,
     seconds_out = static_cast<Type>(decimal * constant::kSixty);  // Seconds
 }
 
+/// @brief Degrees, Minutes, Seconds (DMS) to decimal degrees conversion
+/// @tparam Type Numeric type
+/// @param degrees Value for degrees
+/// @param minutes Value for minutes
+/// @param seconds Value for seconds
+/// @return Value in decimal degrees
 template <class Type>
 inline Type DMSToDecimal(Type degrees, Type minutes, Type seconds) {
     return static_cast<Type>(degrees + (minutes / constant::kSixty) +

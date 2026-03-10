@@ -12,7 +12,7 @@
 #ifndef SOLO_MATH_WORLD_COORDINATES_H
 #define SOLO_MATH_WORLD_COORDINATES_H
 
-#include "Vector.h"
+#include "Math/Vector.h"
 
 namespace solo {
 namespace math {

@@ -9,7 +9,15 @@
 # See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
 # -----------------------------------------------------------------------------
 
-include(UnitTest)
+add_library(Coordinates)
+add_library(solo_engine::Coordinates ALIAS Coordinates)
 
-add_subdirectory(Math)
-add_subdirectory(Coordinates)
+target_sources(Coordinates
+    PRIVATE
+        WorldCoordinates.cpp
+)
+
+target_include_directories(Coordinates
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
+)

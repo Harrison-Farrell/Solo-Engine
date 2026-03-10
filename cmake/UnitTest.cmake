@@ -34,6 +34,7 @@ macro(AddTests target)
 	
 	target_link_libraries(${target} PRIVATE
     solo_engine::Math
+	solo_engine::Coordinates
     gtest
     gtest_main
 	)

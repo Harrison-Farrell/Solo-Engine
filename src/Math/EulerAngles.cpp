@@ -17,7 +17,6 @@
 
 #include "Math/UnitConversions.h"
 
-
 solo::math::EulerAngles::EulerAngles(float psi, float theta, float phi)
     : mPsi(psi), mTheta(theta), mPhi(phi) {}
 
