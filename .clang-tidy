@@ -1,6 +1,6 @@
 ---
 SystemHeaders: false
-HeaderFilterRegex: 'include|src'
+HeaderFilterRegex: '^(?!.*[\\/]VC[\\/]|.*[\\/]Windows Kits[\\/]).*|googletest|gmock|gtest'
 ExcludeHeaderFilterRegex: 'llvm|clang|googletest|gmock|gtest'
 FormatStyle: "file"
 WarningsAsErrors: ''
@@ -43,5 +43,6 @@ CheckOptions:
   readability-identifier-naming.ParameterCase: 'lower_case'
   readability-identifier-naming.StaticConstexprVariablePrefix: 'k'
   readability-identifier-naming.StaticConstantCase: 'CamelCase'
+  readability-identifier-naming.ClassConstantCase: 'UPPER_CASE'
 ...
 

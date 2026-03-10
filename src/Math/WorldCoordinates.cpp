@@ -42,7 +42,7 @@ void solo::math::WorldCoordinates::Set(double x_value, double y_value,
 }
 
 double solo::math::WorldCoordinates::GetDistance(
-    const solo::math::WorldCoordinates& location) {
+    const solo::math::WorldCoordinates& location) const {
     const solo::math::WorldCoordinates world = *this - location;
     const double x_y_z_squared = (world.mXValue * world.mXValue) +
                                  (world.mYValue * world.mYValue) +

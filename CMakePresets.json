@@ -43,7 +43,10 @@
       "hidden": false,
       "binaryDir": "${sourceDir}/build-windows/release",
       "inherits": "windows-template",
+      "generator": "Ninja",
       "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++",
         "CMAKE_BUILD_TYPE": "Release",
         "BUILD_TESTS": "OFF",
         "BUILD_DOXYGEN": "OFF",
@@ -57,7 +60,7 @@
       "inherits": "windows-template",
       "hidden": false,
       "binaryDir": "${sourceDir}/build-windows/debug",
-      "generator": "Ninja Multi-Config",
+      "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++",

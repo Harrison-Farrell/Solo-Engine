@@ -11,132 +11,140 @@
 
 #include "Math/EulerAngles.h"
 
+#include <cstdint>
 #include <stdexcept>
 #include <string>  // NOLINT(misc-include-cleaner) std::to_string()
 
 #include "Math/UnitConversions.h"
 
-solo::math::EulerAngles::EulerAngles(float Psi, float Theta, float Phi)
-    : m_f32Psi(Psi), m_f32Theta(Theta), m_f32Phi(Phi) {}
 
-void solo::math::EulerAngles::SetPsiInRadians(float Psi) { m_f32Psi = Psi; }
+solo::math::EulerAngles::EulerAngles(float psi, float theta, float phi)
+    : mPsi(psi), mTheta(theta), mPhi(phi) {}
 
-float solo::math::EulerAngles::GetPsiInRadians() const { return m_f32Psi; }
+void solo::math::EulerAngles::SetPsiInRadians(float psi) { mPsi = psi; }
 
-void solo::math::EulerAngles::SetPsiInDegrees(float Psi) {
-    m_f32Psi = DegToRad(Psi);
+float solo::math::EulerAngles::GetPsiInRadians() const { return mPsi; }
+
+void solo::math::EulerAngles::SetPsiInDegrees(float psi) {
+    mPsi = DegToRad(psi);
 }
 
 float solo::math::EulerAngles::GetPsiInDegrees() const {
-    return RadToDeg(m_f32Psi);
+    return RadToDeg(mPsi);
 }
 
-void solo::math::EulerAngles::SetThetaInRadians(float Theta) {
-    m_f32Theta = Theta;
-}
+void solo::math::EulerAngles::SetThetaInRadians(float theta) { mTheta = theta; }
 
-float solo::math::EulerAngles::GetThetaInRadians() const { return m_f32Theta; }
+float solo::math::EulerAngles::GetThetaInRadians() const { return mTheta; }
 
-void solo::math::EulerAngles::SetThetaInDegrees(float Theta) {
-    m_f32Theta = DegToRad(Theta);
+void solo::math::EulerAngles::SetThetaInDegrees(float theta) {
+    mTheta = DegToRad(theta);
 }
 
 float solo::math::EulerAngles::GetThetaInDegrees() const {
-    return RadToDeg(m_f32Theta);
+    return RadToDeg(mTheta);
 }
 
-void solo::math::EulerAngles::SetPhiInRadians(float Phi) { m_f32Phi = Phi; }
+void solo::math::EulerAngles::SetPhiInRadians(float phi) { mPhi = phi; }
 
-float solo::math::EulerAngles::GetPhiInRadians() const { return m_f32Phi; }
+float solo::math::EulerAngles::GetPhiInRadians() const { return mPhi; }
 
-void solo::math::EulerAngles::SetPhiInDegrees(float Phi) {
-    m_f32Phi = DegToRad(Phi);
+void solo::math::EulerAngles::SetPhiInDegrees(float phi) {
+    mPhi = DegToRad(phi);
 }
 
 float solo::math::EulerAngles::GetPhiInDegrees() const {
-    return RadToDeg(m_f32Phi);
+    return RadToDeg(mPhi);
 }
 
 bool solo::math::EulerAngles::operator==(
-    const solo::math::EulerAngles& Value) const {
-    if (m_f32Psi != Value.m_f32Psi) return false;
-    if (m_f32Theta != Value.m_f32Theta) return false;
-    if (m_f32Phi != Value.m_f32Phi) return false;
+    const solo::math::EulerAngles& value) const {
+    if (mPsi != value.mPsi) {
+        return false;
+    }
+    if (mTheta != value.mTheta) {
+        return false;
+    }
+    if (mPhi != value.mPhi) {
+        return false;
+    }
     return true;
 }
 
 bool solo::math::EulerAngles::operator!=(
-    const solo::math::EulerAngles& Value) const {
-    return !(*this == Value);
+    const solo::math::EulerAngles& value) const {
+    return !(*this == value);
 }
 
 solo::math::EulerAngles solo::math::EulerAngles::operator*(
-    const solo::math::EulerAngles& Value) const {
+    const solo::math::EulerAngles& value) const {
     solo::math::EulerAngles tmp = *this;
-    tmp.m_f32Psi *= Value.m_f32Psi;
-    tmp.m_f32Theta *= Value.m_f32Theta;
-    tmp.m_f32Phi *= Value.m_f32Phi;
+    tmp.mPsi *= value.mPsi;
+    tmp.mTheta *= value.mTheta;
+    tmp.mPhi *= value.mPhi;
     return tmp;
 }
 
 solo::math::EulerAngles solo::math::EulerAngles::operator+(
-    const solo::math::EulerAngles& Value) const {
+    const solo::math::EulerAngles& value) const {
     solo::math::EulerAngles tmp = *this;
-    tmp.m_f32Psi += Value.m_f32Psi;
-    tmp.m_f32Theta += Value.m_f32Theta;
-    tmp.m_f32Phi += Value.m_f32Phi;
+    tmp.mPsi += value.mPsi;
+    tmp.mTheta += value.mTheta;
+    tmp.mPhi += value.mPhi;
     return tmp;
 }
 
 solo::math::EulerAngles& solo::math::EulerAngles::operator+=(
-    const solo::math::EulerAngles& Value) {
-    m_f32Psi += Value.m_f32Psi;
-    m_f32Theta += Value.m_f32Theta;
-    m_f32Phi += Value.m_f32Phi;
+    const solo::math::EulerAngles& value) {
+    mPsi += value.mPsi;
+    mTheta += value.mTheta;
+    mPhi += value.mPhi;
     return *this;
 }
 
 solo::math::EulerAngles solo::math::EulerAngles::operator-(
-    const solo::math::EulerAngles& Value) const {
+    const solo::math::EulerAngles& value) const {
     solo::math::EulerAngles tmp = *this;
-    tmp.m_f32Psi -= Value.m_f32Psi;
-    tmp.m_f32Theta -= Value.m_f32Theta;
-    tmp.m_f32Phi -= Value.m_f32Phi;
+    tmp.mPsi -= value.mPsi;
+    tmp.mTheta -= value.mTheta;
+    tmp.mPhi -= value.mPhi;
     return tmp;
 }
 
 solo::math::EulerAngles& solo::math::EulerAngles::operator-=(
-    const solo::math::EulerAngles& Value) {
-    m_f32Psi -= Value.m_f32Psi;
-    m_f32Theta -= Value.m_f32Theta;
-    m_f32Phi -= Value.m_f32Phi;
+    const solo::math::EulerAngles& value) {
+    mPsi -= value.mPsi;
+    mTheta -= value.mTheta;
+    mPhi -= value.mPhi;
     return *this;
 }
 
-float& solo::math::EulerAngles::operator[](uint16_t i) {
-    switch (i) {
+float& solo::math::EulerAngles::operator[](uint16_t position) {
+    switch (position) {
         case 0:
-            return m_f32Psi;
+            return mPsi;
         case 1:
-            return m_f32Theta;
+            return mTheta;
         case 2:
-            return m_f32Phi;
+            return mPhi;
         default:
-            throw std::out_of_range("Vector index: " + std::to_string(i) +
-                                    " is out of range");
+            throw std::out_of_range(
+                "Vector index: " + std::to_string(position) +
+                " is out of range");
     }
 }
 
-const float& solo::math::EulerAngles::operator[](uint16_t i) const {
-    switch (i) {
+const float& solo::math::EulerAngles::operator[](uint16_t position) const {
+    switch (position) {
         case 0:
-            return m_f32Psi;
+            return mPsi;
         case 1:
-            return m_f32Theta;
+            return mTheta;
         case 2:
-            return m_f32Phi;
+            return mPhi;
         default:
-            throw std::out_of_range("Vector index: " + std::to_string(i) +
-                                    " is out of range");
+            throw std::out_of_range(
+                "Vector index: " + std::to_string(position) +
+                " is out of range");
     }
 }

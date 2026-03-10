@@ -18,12 +18,10 @@ namespace solo {
 namespace math {
 
 class EulerAngles {
-   protected:
-    float m_f32Psi{0};
-
-    float m_f32Theta{0};
-
-    float m_f32Phi{0};
+   private:
+    float mPsi{0};
+    float mTheta{0};
+    float mPhi{0};
 
    public:
     static constexpr uint16_t EULER_ANGLES_SIZE{12};
@@ -31,39 +29,43 @@ class EulerAngles {
     EulerAngles() = default;
 
     // In Radians
-    EulerAngles(float Psi, float Theta, float Phi);
+    EulerAngles(float psi, float theta, float phi);
 
     virtual ~EulerAngles() = default;
 
-    void SetPsiInRadians(float Psi);
+    EulerAngles(const EulerAngles&) = default;
+    EulerAngles(EulerAngles&&) = default;
+    EulerAngles& operator=(const EulerAngles&) = default;
+    EulerAngles& operator=(EulerAngles&&) = default;
+
+    void SetPsiInRadians(float psi);
     float GetPsiInRadians() const;
-    void SetPsiInDegrees(float Psi);
+    void SetPsiInDegrees(float psi);
     float GetPsiInDegrees() const;
 
-    void SetThetaInRadians(float Theta);
+    void SetThetaInRadians(float theta);
     float GetThetaInRadians() const;
-    void SetThetaInDegrees(float Theta);
+    void SetThetaInDegrees(float theta);
     float GetThetaInDegrees() const;
 
-    void SetPhiInRadians(float Phi);
+    void SetPhiInRadians(float phi);
     float GetPhiInRadians() const;
-    void SetPhiInDegrees(float Phi);
+    void SetPhiInDegrees(float phi);
     float GetPhiInDegrees() const;
 
-    bool operator==(const EulerAngles& Value) const;
-    bool operator!=(const EulerAngles& Value) const;
-    EulerAngles operator*(const EulerAngles& Value) const;
-    EulerAngles operator+(const EulerAngles& Value) const;
-    EulerAngles& operator+=(const EulerAngles& Value);
-    EulerAngles operator-(const EulerAngles& Value) const;
-    EulerAngles& operator-=(const EulerAngles& Value);
+    bool operator==(const EulerAngles& value) const;
+    bool operator!=(const EulerAngles& value) const;
+    EulerAngles operator*(const EulerAngles& value) const;
+    EulerAngles operator+(const EulerAngles& value) const;
+    EulerAngles& operator+=(const EulerAngles& value);
+    EulerAngles operator-(const EulerAngles& value) const;
+    EulerAngles& operator-=(const EulerAngles& value);
 
-    float& operator[](uint16_t i);
-    const float& operator[](uint16_t i) const;
+    float& operator[](uint16_t position);
+    const float& operator[](uint16_t position) const;
 
     friend EulerAngles operator*(const EulerAngles& lhs, float rhs) {
-        return EulerAngles{lhs.m_f32Psi * rhs, lhs.m_f32Theta * rhs,
-                           lhs.m_f32Phi * rhs};
+        return EulerAngles{lhs.mPsi * rhs, lhs.mTheta * rhs, lhs.mPhi * rhs};
     }
     friend EulerAngles operator*(float lhs, const EulerAngles& rhs) {
         return rhs * lhs;

@@ -2,6 +2,8 @@
 
 [Mainpage](src/Mainpage.md)
 
+[Black-Scholes](https://github.com/lyndskg/black-scholes-cpp)
+
 ## Build Status
 
 [![Unit Tests](https://github.com/Harrison-Farrell/Solo-Engine/actions/workflows/unit_tests.yml/badge.svg?branch=main)](https://github.com/Harrison-Farrell/Solo-Engine/actions/workflows/unit_tests.yml)

@@ -25,7 +25,7 @@ namespace engine {
  */
 class Engine {
    public:
-    Engine();
+    Engine() = default;
 
     /**
      * @brief Adds a particle to the engine's management.

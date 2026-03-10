@@ -11,22 +11,20 @@
 
 #include "Engine/Engine.h"
 
-#include <algorithm>
 #include <cstddef>
+#include <vector>
 
 #include "Particle/Particle.h"
 
 namespace solo {
 namespace engine {
 
-Engine::Engine() : mParticles() {}
-
 void Engine::AddParticle(const physics::Particle& particle) {
     mParticles.push_back(particle);
 }
 
 void Engine::UpdateParticles(double time_step) {
-    std::size_t particle_count = mParticles.size();
+    const std::size_t particle_count = mParticles.size();
     for (std::size_t i = 0; i < particle_count; ++i) {
         mParticles[i].Update(time_step);
     }

@@ -17,7 +17,7 @@
 #include "Particle/Particle.h"
 
 int main() {
-    std::cout << "Starting Particle Engine Demo..." << std::endl;
+    std::cout << "Starting Particle Engine Demo..." << "\n";
 
     constexpr int particle_count = 5;
     constexpr float x_location = 2.0;
@@ -32,31 +32,33 @@ int main() {
     solo::math::Vector velocity;
 
     // Create and add multiple particles
-    for (float i = 0; i < particle_count; ++i) {
-        position.Set(x_location * i, y_location, i);
-        velocity.Set(x_speed + i, y_speed, z_speed + i);
-        solo::physics::Particle point(i * mass_modifier);
+    for (int i = 0; i < particle_count; ++i) {
+        position.Set(x_location * static_cast<float>(i), y_location,
+                     static_cast<float>(i));
+        velocity.Set(x_speed + static_cast<float>(i), y_speed,
+                     z_speed + static_cast<float>(i));
+        solo::physics::Particle point(static_cast<float>(i) * mass_modifier);
         point.SetPosition(position);
         point.SetVelocity(velocity);  // Moving along X axis
         engine.AddParticle(point);
     }
 
     std::cout << "Added " << engine.GetParticleCount()
-              << " particles to the engine." << std::endl;
+              << " particles to the engine." << "\n";
 
     // Simulate for a few steps
     const double time_step = 0.1;
     for (int step = 1; step <= 3; ++step) {
-        std::cout << "\n--- Step " << step << " ---" << std::endl;
+        std::cout << "\n--- Step " << step << " ---" << "\n";
         engine.UpdateParticles(time_step);
 
         // Print positions
         auto& particles = engine.GetParticles();
         for (std::size_t i = 0; i < particles.size(); ++i) {
-            auto pos = particles[i].GetPosition();
+            auto pos = particles.at(i).GetPosition();
             std::cout << "Particle " << i << " Position: (" << pos.GetX()
                       << ", " << pos.GetY() << ", " << pos.GetZ() << ")"
-                      << std::endl;
+                      << "\n";
         }
     }
 

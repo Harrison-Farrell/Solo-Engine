@@ -193,7 +193,9 @@ class Matrix {
     };
 
     void InPlaceTranspose() {
-        if (cols != rows) return;
+        if (cols != rows) {
+            return;
+        }
 
         for (uint16_t i = 0; i < rows; ++i) {
             for (uint16_t j = 0; j < i; ++j) {
@@ -209,8 +211,8 @@ class Matrix {
      */
     friend std::ostream& operator<<(std::ostream& stream,
                                     const Matrix& matrix) {
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
+        for (uint8_t i = 0; i < rows; ++i) {
+            for (uint8_t j = 0; j < cols; ++j) {
                 stream << matrix.mData[i][j] << " ";
             }
             stream << "\n";  // Add newline after each row
@@ -222,7 +224,7 @@ class Matrix {
 /**
  * @brief 3x3 Matrix of type float
  */
-typedef Matrix<float, 3, 3> Matrix3d;
+using Matrix3d = Matrix<float, 3, 3>;
 
 }  // namespace math
 }  // namespace solo

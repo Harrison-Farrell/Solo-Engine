@@ -24,7 +24,7 @@ class WorldCoordinates {
     double mZValue{0};
 
    public:
-    static constexpr uint16_t kWorldCoordinatesSize{24};
+    static constexpr uint16_t WOLRD_COORDINATE_SIZE{24};
 
     WorldCoordinates() = default;
 
@@ -48,7 +48,7 @@ class WorldCoordinates {
 
     void Set(double x_value, double y_value, double z_value);
 
-    double GetDistance(const WorldCoordinates& location);
+    double GetDistance(const WorldCoordinates& location) const;
 
     static WorldCoordinates Lerp(const WorldCoordinates& source,
                                  const WorldCoordinates& destination,
