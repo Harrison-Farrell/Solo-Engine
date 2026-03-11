@@ -14,6 +14,7 @@
 
 #include <cmath>
 #include <numbers>
+#include <tuple>
 
 namespace solo {
 namespace math {
@@ -30,7 +31,7 @@ static constexpr double kThreeThousandSixHundred = 3600;
 /// @param rad Value in radians
 /// @return Value in degrees
 template <class Type>
-inline Type RadToDeg(Type rad) {
+[[nodiscard]] constexpr Type RadToDeg(Type rad) {
     return static_cast<Type>(rad * (constant::k2PI / std::numbers::pi));
 }
 
@@ -39,7 +40,7 @@ inline Type RadToDeg(Type rad) {
 /// @param deg Value in degrees
 /// @return Value in radians
 template <class Type>
-inline Type DegToRad(Type deg) {
+[[nodiscard]] constexpr Type DegToRad(Type deg) {
     return static_cast<Type>(deg * (std::numbers::pi / constant::k2PI));
 }
 
@@ -48,7 +49,7 @@ inline Type DegToRad(Type deg) {
 /// @param feet Value in feet
 /// @return Value in meters
 template <class Type>
-inline Type FeetToMeters(Type feet) {
+[[nodiscard]] constexpr Type FeetToMeters(Type feet) {
     return static_cast<Type>(feet / constant::kFeet2Meters);
 }
 
@@ -57,31 +58,30 @@ inline Type FeetToMeters(Type feet) {
 /// @param meters Value in meters
 /// @return Value in feet
 template <class Type>
-inline Type MetersToFeet(Type meters) {
+[[nodiscard]] constexpr Type MetersToFeet(Type meters) {
     return static_cast<Type>(meters * constant::kFeet2Meters);
 }
 
 /// @brief Decimal degrees to Degrees, Minutes, Seconds (DMS) conversion
 /// @tparam Type Numeric type
 /// @param decimal Value in decimal degrees
-/// @param degrees_out Output parameter for degrees
-/// @param minutes_out Output parameter for minutes
-/// @param seconds_out Output parameter for seconds
+/// @return Tuple containing (degrees, minutes, seconds)
 template <class Type>
-inline void DecimalToDMS(Type decimal, Type& degrees_out, Type& minutes_out,
-                         Type& seconds_out) {
+[[nodiscard]] constexpr std::tuple<Type, Type, Type> DecimalToDMS(Type decimal) {
     decimal = std::abs(decimal);  // Make sure the value is not negative
-    degrees_out = static_cast<Type>(static_cast<uint32_t>(decimal));
+    Type degrees_out = static_cast<Type>(static_cast<uint32_t>(decimal));
     decimal -= degrees_out;  // Degrees
 
-    minutes_out = static_cast<Type>(decimal * constant::kSixty);
+    Type minutes_out = static_cast<Type>(decimal * constant::kSixty);
 
     decimal =
         minutes_out - static_cast<Type>(static_cast<uint32_t>(minutes_out));
 
     minutes_out =
         static_cast<Type>(static_cast<uint32_t>(minutes_out));    // Minutes
-    seconds_out = static_cast<Type>(decimal * constant::kSixty);  // Seconds
+    Type seconds_out = static_cast<Type>(decimal * constant::kSixty);  // Seconds
+    
+    return {degrees_out, minutes_out, seconds_out};
 }
 
 /// @brief Degrees, Minutes, Seconds (DMS) to decimal degrees conversion
@@ -91,7 +91,7 @@ inline void DecimalToDMS(Type decimal, Type& degrees_out, Type& minutes_out,
 /// @param seconds Value for seconds
 /// @return Value in decimal degrees
 template <class Type>
-inline Type DMSToDecimal(Type degrees, Type minutes, Type seconds) {
+[[nodiscard]] constexpr Type DMSToDecimal(Type degrees, Type minutes, Type seconds) {
     return static_cast<Type>(degrees + (minutes / constant::kSixty) +
                              (seconds / constant::kThreeThousandSixHundred));
 }

@@ -48,8 +48,7 @@ TEST(UnitConversion, DMSToDecimal) {
 }
 
 TEST(UnitConversion, DecimalToDMS) {
-    double hours, minutes, seconds;
-    solo::math::DecimalToDMS(45.2816, hours, minutes, seconds);
+    auto [hours, minutes, seconds] = solo::math::DecimalToDMS<double>(45.2816);
     EXPECT_NEAR(45, hours, 0.001);
     EXPECT_NEAR(16, minutes, 0.001);
     EXPECT_NEAR(53.7599, seconds, 0.001);

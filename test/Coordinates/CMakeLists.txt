@@ -10,3 +10,4 @@
 # -----------------------------------------------------------------------------
 
 AddTests(world_coordinates_test)
+AddTests(geodetic_test)
