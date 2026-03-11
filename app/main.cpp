@@ -10,17 +10,18 @@
 // -----------------------------------------------------------------------------
 
 #include <atomic>
+#include <chrono>
 #include <csignal>
 #include <cstddef>
 #include <iostream>
 #include <thread>
-#include <chrono>
 
+#include "Coordinates/WorldCoordinates.h"
 #include "Engine/Engine.h"
 #include "Math/Vector.h"
-#include "Coordinates/WorldCoordinates.h"
 #include "Particle/Particle.h"
 
+namespace globals {
 // Global flag to track if the application should keep running
 // Using std::atomic flag ensures thread-safe reads and writes
 std::atomic<bool> g_running{true};
@@ -28,14 +29,16 @@ std::atomic<bool> g_running{true};
 // Signal handler for SIGINT (Ctrl+C)
 void signal_handler(int signal) {
     if (signal == SIGINT) {
-        std::cout << "\nReceived Ctrl+C (SIGINT). Stopping simulation..." << "\n";
+        std::cout << "\nReceived Ctrl+C (SIGINT). Stopping simulation..."
+                  << "\n";
         g_running = false;
     }
 }
+}  // namespace globals
 
 int main() {
     // Register the signal handler
-    std::signal(SIGINT, signal_handler);
+    std::signal(SIGINT, globals::signal_handler);
 
     std::cout << "Starting Particle Engine Demo..." << "\n";
 
@@ -46,6 +49,7 @@ int main() {
     constexpr float y_speed = 5.0;
     constexpr float z_speed = 2.0;
     constexpr float mass_modifier = 2.0;
+    constexpr int sleep_time_ms = 1000;
 
     solo::engine::Engine engine;
     solo::math::WorldCoordinates position;
@@ -53,8 +57,8 @@ int main() {
 
     // Create and add multiple particles
     for (int i = 0; i < particle_count; ++i) {
-        position.Set(static_cast<double>(x_location) * i, static_cast<double>(y_location),
-                     static_cast<double>(i));
+        position.Set(static_cast<double>(x_location) * i,
+                     static_cast<double>(y_location), static_cast<double>(i));
         velocity.Set(x_speed + static_cast<float>(i), y_speed,
                      z_speed + static_cast<float>(i));
         solo::physics::Particle point(static_cast<double>(i) * mass_modifier);
@@ -68,11 +72,11 @@ int main() {
 
     // Setup signal handler loop
     std::cout << "Running simulation loop. Press Ctrl+C to stop..." << "\n";
-    
+
     int step = 1;
     const double time_step = 0.1;
-    
-    while (g_running) {
+
+    while (globals::g_running) {
         std::cout << "\n--- Step " << step << " ---" << "\n";
         engine.UpdateParticles(time_step);
 
@@ -84,9 +88,9 @@ int main() {
                       << ", " << pos.GetY() << ", " << pos.GetZ() << ")"
                       << "\n";
         }
-        
+
         step++;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time_ms));
     }
 
     std::cout << "\nSimulation stopped gracefully." << "\n";

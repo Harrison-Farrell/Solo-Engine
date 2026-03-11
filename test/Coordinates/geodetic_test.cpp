@@ -23,6 +23,7 @@ namespace {
 // Needed before including Geodetic.h because Geodetic.h calls DegToRad and
 // RadToDeg without namespace qualifications.
 using namespace solo::math;
+using namespace solo::coordinate;
 
 TEST(test_geodetic, GetEllipsoidAxisWGS84) {
     auto [major_axis, minor_axis] =

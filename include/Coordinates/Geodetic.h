@@ -20,6 +20,9 @@
 
 #include "Math/UnitConversions.h"
 
+namespace solo {
+namespace coordinate {
+
 /// @enum Reference Ellipsoids
 /// data taken from Wikipedia and DoD, WGS84, DMA TR 8350.2-B,1 Sept. 1991
 enum class EllipsoidReference : uint8_t {
@@ -52,178 +55,52 @@ enum class EllipsoidReference : uint8_t {
     WGS_1984                // 27
 };
 
+struct EllipsoidParameters {
+    double major_axis;
+    double minor_axis;
+};
+
+/// @brief Ellipsoid data table
+/// data taken from Wikipedia and DoD, WGS84, DMA TR 8350.2-B,1 Sept. 1991
+static constexpr EllipsoidParameters ELLIPSOID_DATA[] = {
+    {6377563.396, 6356256.909},       // Airy
+    {6377340.189, 6356034.448},       // Airy_Modified
+    {6378160.000, 6356774.719},       // Australian_National
+    {6377397.155, 6356078.963},       // Bessel_1841
+    {6377483.865, 6356078.963},       // Bessel_1841_Namibia
+    {6378206.400, 6356583.800},       // Clarke_1866
+    {6378249.145, 6356514.870},       // Clarke_1880
+    {6377298.556, 6356097.550},       // Everest_Sabah_Sarawak
+    {6377276.345, 6356075.413},       // Everest_1830
+    {6377304.063, 6356103.039},       // Everest_1948
+    {6377301.243, 6356100.228},       // Everest_1956
+    {6377295.664, 6356094.668},       // Everest_1969
+    {6378166.000, 6356784.284},       // Fischer_1960
+    {6378155.000, 6356773.320},       // Fischer_1960_Modified
+    {6378150.000, 6356768.337},       // Fischer_1968
+    {6378137.000, 6356752.314},       // GRS_1980
+    {6378200.000, 6356818.170},       // Helmert_1906
+    {6378270.000, 6356794.343},       // Hough
+    {6378388.000, 6356911.946},       // International_1924
+    {6378245.000, 6356863.019},       // Karsovsky_1940
+    {6378136.000, 6356751.302},       // SGS_1985
+    {6378160.000, 6356774.719},       // South_American_1969
+    {6371000.0, 6371000.0},           // Sphere_6371km
+    {6378165.000, 6356783.287},       // WGS_1960
+    {6378145.000, 6356759.769},       // WGS_1966
+    {6378135.000, 6356750.520},       // WGS_1972
+    {6378137.000, 6356752.314245}     // WGS_1984
+};
+
 /// @brief Get the major and minor axes of an ellipsoid
 /// @param reference Reference ellipsoid
 /// @return Pair containing (major axis, minor axis)
 template <class Type>
 [[nodiscard]] constexpr std::pair<Type, Type> GetEllipsoidAxis(
     EllipsoidReference reference) {
-    Type major_axis = 0;
-    Type minor_axis = 0;
-    switch (reference) {
-        case EllipsoidReference::Airy:
-            major_axis = static_cast<Type>(6377563.396);
-            minor_axis = static_cast<Type>(6356256.909);
-            // 1/F 299.324965
-            break;
-
-        case EllipsoidReference::Airy_Modified:
-            major_axis = static_cast<Type>(6377340.189);
-            minor_axis = static_cast<Type>(6356034.448);
-            // 1/F 299.324965
-            break;
-
-        case EllipsoidReference::Australian_National:
-            major_axis = static_cast<Type>(6378160.000);
-            minor_axis = static_cast<Type>(6356774.719);
-            // 1/F 298.250000
-            break;
-
-        case EllipsoidReference::Bessel_1841:
-            major_axis = static_cast<Type>(6377397.155);
-            minor_axis = static_cast<Type>(6356078.963);
-            // 1/F 299.152813
-            break;
-
-        case EllipsoidReference::Bessel_1841_Namibia:
-            major_axis = static_cast<Type>(6377483.865);
-            minor_axis = static_cast<Type>(6356078.963);
-            // 1/F 299.152813
-            break;
-
-        case EllipsoidReference::Clarke_1866:
-            major_axis = static_cast<Type>(6378206.400);
-            minor_axis = static_cast<Type>(6356583.800);
-            // 1/F 294.978698
-            break;
-
-        case EllipsoidReference::Clarke_1880:
-            major_axis = static_cast<Type>(6378249.145);
-            minor_axis = static_cast<Type>(6356514.870);
-            // 1/F 293.465000
-            break;
-
-        case EllipsoidReference::Everest_Sabah_Sarawak:
-            major_axis = static_cast<Type>(6377298.556);
-            minor_axis = static_cast<Type>(6356097.550);
-            // 1/F 300.801700
-            break;
-
-        case EllipsoidReference::Everest_1830:
-            major_axis = static_cast<Type>(6377276.345);
-            minor_axis = static_cast<Type>(6356075.413);
-            // 1/F 300.801700
-            break;
-
-        case EllipsoidReference::Everest_1948:
-            major_axis = static_cast<Type>(6377304.063);
-            minor_axis = static_cast<Type>(6356103.039);
-            // 1/F 300.801700
-            break;
-
-        case EllipsoidReference::Everest_1956:
-            major_axis = static_cast<Type>(6377301.243);
-            minor_axis = static_cast<Type>(6356100.228);
-            // 1/F 300.801700
-            break;
-
-        case EllipsoidReference::Everest_1969:
-            major_axis = static_cast<Type>(6377295.664);
-            minor_axis = static_cast<Type>(6356094.668);
-            // 1/F 300.801700
-            break;
-
-        case EllipsoidReference::Fischer_1960:
-            major_axis = static_cast<Type>(6378166.000);
-            minor_axis = static_cast<Type>(6356784.284);
-            // 1/F 298.300000
-            break;
-
-        case EllipsoidReference::Fischer_1960_Modified:
-            major_axis = static_cast<Type>(6378155.000);
-            minor_axis = static_cast<Type>(6356773.320);
-            // 1/F 298.300000
-            break;
-
-        case EllipsoidReference::Fischer_1968:
-            major_axis = static_cast<Type>(6378150.000);
-            minor_axis = static_cast<Type>(6356768.337);
-            // 1/F 298.300000
-            break;
-
-        case EllipsoidReference::GRS_1980:
-            major_axis = static_cast<Type>(6378137.000);
-            minor_axis = static_cast<Type>(6356752.314);
-            // 1/F 298.257222
-            break;
-
-        case EllipsoidReference::Helmert_1906:
-            major_axis = static_cast<Type>(6378200.000);
-            minor_axis = static_cast<Type>(6356818.170);
-            // 1/F 298.300000
-            break;
-
-        case EllipsoidReference::Hough:
-            major_axis = static_cast<Type>(6378270.000);
-            minor_axis = static_cast<Type>(6356794.343);
-            // 1/F 297.000000
-            break;
-
-        case EllipsoidReference::International_1924:
-            major_axis = static_cast<Type>(6378388.000);
-            minor_axis = static_cast<Type>(6356911.946);
-            // 1/F 297.000000
-            break;
-
-        case EllipsoidReference::Karsovsky_1940:
-            major_axis = static_cast<Type>(6378245.000);
-            minor_axis = static_cast<Type>(6356863.019);
-            // 1/F 298.300000
-            break;
-
-        case EllipsoidReference::SGS_1985:
-            major_axis = static_cast<Type>(6378136.000);
-            minor_axis = static_cast<Type>(6356751.302);
-            // 1/F 298.257000
-            break;
-
-        case EllipsoidReference::South_American_1969:
-            major_axis = static_cast<Type>(6378160.000);
-            minor_axis = static_cast<Type>(6356774.719);
-            // 1/F 298.250000
-            break;
-
-        case EllipsoidReference::Sphere_6371km:
-            major_axis = static_cast<Type>(6371000);
-            minor_axis = static_cast<Type>(6371000);
-            break;
-
-        case EllipsoidReference::WGS_1960:
-            major_axis = static_cast<Type>(6378165.000);
-            minor_axis = static_cast<Type>(6356783.287);
-            // 1/F 298.300000
-            break;
-
-        case EllipsoidReference::WGS_1966:
-            major_axis = static_cast<Type>(6378145.000);
-            minor_axis = static_cast<Type>(6356759.769);
-            // 1/F 298.250000
-            break;
-
-        case EllipsoidReference::WGS_1972:
-            major_axis = static_cast<Type>(6378135.000);
-            minor_axis = static_cast<Type>(6356750.520);
-            // 1/F 298.260000
-            break;
-
-        case EllipsoidReference::WGS_1984:
-            major_axis = static_cast<Type>(6378137.000);
-            minor_axis = static_cast<Type>(6356752.314245);
-            // 1/F 298.257224
-            break;
-    }
-
-    return {major_axis, minor_axis};
+    const auto& params = ELLIPSOID_DATA[static_cast<size_t>(reference)];
+    return {static_cast<Type>(params.major_axis),
+            static_cast<Type>(params.minor_axis)};
 }
 
 /// @brief Convert geodetic coordinates to geocentric coordinates
@@ -505,5 +382,7 @@ template <class Type>
     Type roll = static_cast<Type>(std::atan2(Dot(Y3, z2), Dot(Y3, y2)));
     return {heading, pitch, roll};
 }
+} // coordinate
+} // solo
 
 #endif  // SOLO_COORDINATES_GEODETIC_H
