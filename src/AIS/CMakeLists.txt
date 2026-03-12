@@ -9,8 +9,15 @@
 # See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
 # -----------------------------------------------------------------------------
 
-include(UnitTest)
+add_library(AIS)
+add_library(solo_engine::AIS ALIAS AIS)
 
-add_subdirectory(Math)
-add_subdirectory(Coordinates)
-add_subdirectory(AIS)
+target_sources(AIS
+    PRIVATE
+        Messages/baseMessage.cpp
+)
+
+target_include_directories(AIS
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
+)

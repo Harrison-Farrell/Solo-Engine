@@ -19,3 +19,5 @@ add_subdirectory(Math)
 add_subdirectory(Particle)
 add_subdirectory(Engine)
 add_subdirectory(Coordinates)
+add_subdirectory(AIS)
+

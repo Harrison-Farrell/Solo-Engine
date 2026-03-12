@@ -13,8 +13,10 @@
 #define SOLO_MATH_UNIT_CONVERSIONS_H
 
 #include <cmath>
+#include <cstdint>
 #include <numbers>
 #include <tuple>
+
 
 namespace solo {
 namespace math {
@@ -67,7 +69,8 @@ template <class Type>
 /// @param decimal Value in decimal degrees
 /// @return Tuple containing (degrees, minutes, seconds)
 template <class Type>
-[[nodiscard]] constexpr std::tuple<Type, Type, Type> DecimalToDMS(Type decimal) {
+[[nodiscard]] constexpr std::tuple<Type, Type, Type> DecimalToDMS(
+    Type decimal) {
     decimal = std::abs(decimal);  // Make sure the value is not negative
     Type degrees_out = static_cast<Type>(static_cast<uint32_t>(decimal));
     decimal -= degrees_out;  // Degrees
@@ -78,9 +81,10 @@ template <class Type>
         minutes_out - static_cast<Type>(static_cast<uint32_t>(minutes_out));
 
     minutes_out =
-        static_cast<Type>(static_cast<uint32_t>(minutes_out));    // Minutes
-    Type seconds_out = static_cast<Type>(decimal * constant::kSixty);  // Seconds
-    
+        static_cast<Type>(static_cast<uint32_t>(minutes_out));  // Minutes
+    Type seconds_out =
+        static_cast<Type>(decimal * constant::kSixty);  // Seconds
+
     return {degrees_out, minutes_out, seconds_out};
 }
 
@@ -91,7 +95,8 @@ template <class Type>
 /// @param seconds Value for seconds
 /// @return Value in decimal degrees
 template <class Type>
-[[nodiscard]] constexpr Type DMSToDecimal(Type degrees, Type minutes, Type seconds) {
+[[nodiscard]] constexpr Type DMSToDecimal(Type degrees, Type minutes,
+                                          Type seconds) {
     return static_cast<Type>(degrees + (minutes / constant::kSixty) +
                              (seconds / constant::kThreeThousandSixHundred));
 }

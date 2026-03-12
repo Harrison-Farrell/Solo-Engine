@@ -20,22 +20,22 @@
       }
     },
     {
-			"name": "linux-debug",
-			"displayName": "Debug",
+      "name": "linux-debug",
+      "displayName": "Debug",
       "description": "Optimizations on and all options disabled",
       "hidden": false,
       "binaryDir": "${sourceDir}/build-linux/debug",
       "inherits": "linux-template",
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_CXX_STANDARD": "23",
-				"CMAKE_CXX_STANDARD_REQUIRED": "YES",
-				"CMAKE_CXX_EXTENSIONS": "OFF",
-				"CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
-				"DEFAULT_CXX_COMPILE_FLAGS": "-g;-Wextra;-Wall;-Wfloat-equal;-Wundef;-Wpointer-arith;-Wshadow;-Wcast-align;-Wswitch-default;-Wswitch-enum;-Wconversion;-Wpedantic;-Werror",
-				"DEFAULT_CXX_OPTIMIZE_FLAG": "-O0"
-			}
-		},    
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_CXX_STANDARD_REQUIRED": true,
+        "CMAKE_CXX_EXTENSIONS": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "DEFAULT_CXX_COMPILE_FLAGS": "-g;-Wextra;-Wall;-Wfloat-equal;-Wundef;-Wpointer-arith;-Wshadow;-Wcast-align;-Wswitch-default;-Wswitch-enum;-Wconversion;-Wpedantic;-Werror",
+        "DEFAULT_CXX_OPTIMIZE_FLAG": "-O0"
+      }
+    },
     {
       "name": "windows-release",
       "displayName": "Release",
@@ -43,30 +43,38 @@
       "hidden": false,
       "binaryDir": "${sourceDir}/build-windows/release",
       "inherits": "windows-template",
-      "generator": "Ninja",
+      "generator": "Ninja Multi-Config",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_CXX_STANDARD_REQUIRED": true,
+        "CMAKE_CXX_EXTENSIONS": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
         "CMAKE_BUILD_TYPE": "Release",
-        "BUILD_TESTS": "OFF",
-        "BUILD_DOXYGEN": "OFF",
+        "BUILD_TESTS": false,
+        "BUILD_DOXYGEN": false,
         "DEFAULT_CXX_OPTIMIZE_FLAG": "-O3"
       }
     },
     {
       "name": "windows-debug",
       "displayName": "Debug",
-      "description": "Optimizations off and all options enabled",
+      "description": "Optimizations false and all options enabled",
       "inherits": "windows-template",
       "hidden": false,
       "binaryDir": "${sourceDir}/build-windows/debug",
-      "generator": "Ninja",
+      "generator": "Ninja Multi-Config",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_CXX_STANDARD_REQUIRED": true,
+        "CMAKE_CXX_EXTENSIONS": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
         "CMAKE_BUILD_TYPE": "Debug",
-        "BUILD_TESTS": "ON",
-        "BUILD_DOXYGEN": "ON",
+        "BUILD_TESTS": true,
+        "BUILD_DOXYGEN": true,
         "DEFAULT_CXX_OPTIMIZE_FLAG": "-O0"
       }
     },
@@ -85,13 +93,13 @@
   ],
   "buildPresets": [
     {
-			"name": "linux-debug",
-			"jobs": 10,
-			"displayName": "Linux Debug Build",
-			"description": "debug build type",
-			"configurePreset": "linux-debug",
-			"configuration": "Debug"
-		},
+      "name": "linux-debug",
+      "jobs": 10,
+      "displayName": "Linux Debug Build",
+      "description": "debug build type",
+      "configurePreset": "linux-debug",
+      "configuration": "Debug"
+    },
     {
       "name": "windows-release-build",
       "jobs": 10,
