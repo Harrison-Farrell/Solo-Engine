@@ -12,7 +12,10 @@
 #ifndef SOLO_ENGINE_ENGINE_H
 #define SOLO_ENGINE_ENGINE_H
 
+#include <atomic>
+#include <chrono>
 #include <cstddef>
+#include <thread>
 #include <vector>
 
 #include "Particle/Particle.h"
@@ -26,6 +29,28 @@ namespace engine {
 class Engine {
    public:
     Engine() = default;
+
+    /**
+     * @brief Destructor ensures simulation loop is stopped.
+     */
+    virtual ~Engine();
+
+    /**
+     * @brief Starts the threaded simulation tick function.
+     * @param tick_rate_hz Target frequency for updates.
+     */
+    void Start(double tick_rate_hz = 60.0);
+
+    /**
+     * @brief Stops the threaded simulation tick function.
+     */
+    void Stop();
+
+    /**
+     * @brief Checks if the simulation loop is currently running.
+     * @return True if running.
+     */
+    bool IsRunning() const;
 
     /**
      * @brief Adds a particle to the engine's management.
@@ -52,7 +77,15 @@ class Engine {
     std::vector<physics::Particle>& GetParticles();
 
    private:
+    /**
+     * @brief Internal loop managed by the thread.
+     * @param tick_rate_hz Frequency of updates.
+     */
+    void SimulationLoop(double tick_rate_hz);
+
     std::vector<physics::Particle> mParticles;
+    std::atomic<bool> mRunning{false};
+    std::thread mLoopThread;
 };
 
 }  // namespace engine

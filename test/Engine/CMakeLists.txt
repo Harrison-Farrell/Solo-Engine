@@ -9,8 +9,4 @@
 # See <https://www.gnu.org/licenses/agpl-3.0.html> for full details.
 # -----------------------------------------------------------------------------
 
-include(UnitTest)
-
-add_subdirectory(Math)
-add_subdirectory(Coordinates)
-add_subdirectory(Engine)
+AddTests(engine_test)
